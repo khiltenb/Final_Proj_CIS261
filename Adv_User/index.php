@@ -19,6 +19,7 @@ Here's where things get a little messy. I had idead about how to organize the da
      task at the time I was doing this.
 */
 
+//  This is a fallback in case something weird happens.
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL){
     $action = filter_input(INPUT_GET, 'action');
@@ -28,19 +29,46 @@ if ($action == NULL){
     }
 }
 
+//  This is where things get messy real quick. I'm planning to use this
 if ($action == 'Advanced Mode')                                 //
 {                                                               //
     include('EnterCRNAdv.php');                                 //
 } else if ($action == 'Continue to Info Verification') {        //
+    $crn = array();
+    $crn[0] = filter_input(INPUT_POST, 'crn1');
+    $crn[1] = filter_input(INPUT_POST, 'crn2');
+    $crn[2] = filter_input(INPUT_POST, 'crn3');
+    $crn[3] = filter_input(INPUT_POST, 'crn4');
+    $crn[4] = filter_input(INPUT_POST, 'crn5');
+    $crn[5] = filter_input(INPUT_POST, 'crn6');
+    // $count = 0;
+    // $classinformation = array();
+    // for ($i = 0; $i < 5; $i++)
+    // {
+    //     if ($crn[$i] != '')
+    //     {
+    //         $crn[$i] = intval($crn[$i]);
+    //         $classinformation[$i] = get_ClassInfo($crn[$i]);
+    //         $count++;
+    //     }
+    // }
     include('InfoVerificationAdv.php');                         //
 } else if ($action == 'Continue to the Prototype Schedule') {   //
+    // stuff
     include('ProtoSchedAdv.php');                               //
 } else if ($action == 'Continue to Modified Schedule') {        //
+    // stuff
     include('AddSchedAdv.php');                                 //
 } else if ($action == 'Enter Other CRNs') {                     //
+    // stuff
     include('EnterCRNAdv.php');                                 //
-} else if ($action == 'Download') {
-    include('../Download.php');
-} else if ($action == 'Exit') {
-    include('../ExitScreen.php');
+} else if ($action == 'Download') {                             //
+    // stuff
+    include('../Download.php');                                 //
+} else if ($action == 'Exit') {                                 //
+    // stuff
+    include('../ExitScreen.php');                               //
+} else if ($action == 'Add Event') {                            //
+    // stuff
+    include('AddSchedAdv.php');                                 //
 }

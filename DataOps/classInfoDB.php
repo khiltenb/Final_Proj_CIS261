@@ -1,15 +1,16 @@
 <?php
-function get_ClassMeetingTimes($crn) {
+function get_ClassInfo($crn) {
     global $db;
-    $query = 'SELECT CMON, CTUE, CWED, CTHU, CFRI, CSAT, CSUN 
-              FROM ClassInfo
+    $query = 'SELECT * FROM ClassInfo
               WHERE CRN = :crn';
     $statement = $db->prepare($query);
     $statement->bindValue(':crn', $crn);
     $statement->execute();
     $statement->closeCursor();
+    echo $statement;
     return $statement;    
 }
+
 
 function getProf($crn) {
     global $db;
@@ -21,8 +22,8 @@ function getProf($crn) {
     $statement->closeCursor();
     return $statement;
 }
-/*
-function 
+
+
 /*
 function get_category_name($category_id) {
     global $db;
@@ -36,5 +37,5 @@ function get_category_name($category_id) {
     $category_name = $category['categoryName'];
     return $category_name;
 }
-?>
 */
+?>
