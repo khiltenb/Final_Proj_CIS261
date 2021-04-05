@@ -8,18 +8,39 @@
 
 <body>
     <h1>Please Verify the Information Presented</h1>
-    <p>The information here will be displayed in a table showing the CRN entered, the Course ID, the name of the class,
-        the name of the professor, and the class meeting time followed by a delete button shoud the information
-        displayed be incorrect.
-    </p>
+    <p>The SQL should run here showing the added details about the class to let the
+        student confirm the data shown. I'll add a "delete" button later on so that mis-entering 
+        information doesn't result in having to start over.
+     </p>
     <table>
         <tr>
             <th>CRN</th>
-            <th>Course Title</th>
             <th>Course ID</th>
-            <th>Professor</th>
-            <th>Meeting Time</th>
+            <th>Prof.</th>
+            <th>Mon</th>
+            <th>Tues</th>
+            <th>Weds</th>
+            <th>Thur</th>
+            <th>Fri</th>
+            <th>Sat</th>
+            <th>Sun</th>
         </tr>
+        <?php for($i = 0;$i < $count; $i++): ?>
+        <?php foreach($classInformation[$i] as $class):?>
+        <tr>
+            <td><?php echo $class['CRN']; ?></td>
+            <td><?php echo $class['CourseID']; ?></td>
+            <td><?php echo $class['Professor']; ?></td>
+            <td><?php echo $class['CMON']; ?></td>
+            <td><?php echo $class['CTUE']; ?></td>
+            <td><?php echo $class['CWED']; ?></td>
+            <td><?php echo $class['CTHU']; ?></td>
+            <td><?php echo $class['CFRI']; ?></td>
+            <td><?php echo $class['CSAT']; ?></td>
+            <td><?php echo $class['CSUN']; ?></td>
+        </tr>
+        <?php endforeach; ?>
+        <?php endfor;?>
         <!--
         <tr>
             <td>20107</td>

@@ -113,15 +113,15 @@
             </select>
         </form>
         <form>
-            <input type="submit" value="Add Event">
+            <input type="submit" name='action' value="Add Event">
         </form>
     </div>
 
     <form action="." method="POST" style="display:inline">
-        <input type="submit" name='download' value="Download">
+        <input type="submit" name='action' value="Download">
     </form>
 
     <form action="." method="POST" style="display:inline">
-        <input type="submit" name='exit' value="Exit">
+        <input type="submit" name='action' value="Exit">
     </form>
 <?php include '../view/footer.php'; ?>
