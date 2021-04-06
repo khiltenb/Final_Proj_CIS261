@@ -22,26 +22,52 @@
     </p>
     -->
     <p>
-        Feel free to add your own 
+        Feel free to add your own scheduled events
     </p>
-
+<!--
     <p>
         <img src="../ScheduleEx.png" />
     </p>
+-->
+<table>
+        <tr>
+            <th>Event Name</th>
+            <th>Mon</th>
+            <th>Tues</th>
+            <th>Weds</th>
+            <th>Thur</th>
+            <th>Fri</th>
+            <th>Sat</th>
+            <th>Sun</th>
+        </tr>
 
+        <?php foreach($events as $event): ?>
+        <tr>
+            <td><?php echo $event['EventName']; ?></td>
+            <td><?php echo $event['EMON']; ?></td>
+            <td><?php echo $event['ETUE']; ?></td>
+            <td><?php echo $event['EWED']; ?></td>
+            <td><?php echo $event['ETHU']; ?></td>
+            <td><?php echo $event['EFRI']; ?></td>
+            <td><?php echo $event['ESAT']; ?></td>
+            <td><?php echo $event['ESUN']; ?></td>
+            <td><input action="index.php" type="submit" name="action" id=<?php echo $i;?> value="remove"></td>
+        </tr>
+        <?php endforeach;?>
+    </table>
     <div class="addsched">
-        <form action="" method="POST">
+        <form action="." method="POST">
             <label>Add: </label>
             <input type="text" size=15 name="EventName">
-            <input type="checkbox" name="mon"> Monday <br>
-            <input type="checkbox" name="tues"> Tuesday <br>
-            <input type="checkbox" name="weds"> Wednesday <br>
-            <input type="checkbox" name="thurs"> Thursday <br>
-            <input type="checkbox" name="fri"> Friday <br>
-            <input type="checkbox" name="sat"> Saturday <br>
-            <input type="checkbox" name="sun"> Sunday <br>
+            <input type="checkbox" name="mon" value="None"> Monday <br>
+            <input type="checkbox" name="tue" value="None"> Tuesday <br>
+            <input type="checkbox" name="wed" value="None"> Wednesday <br>
+            <input type="checkbox" name="thu" value="None"> Thursday <br>
+            <input type="checkbox" name="fri" value="None"> Friday <br>
+            <input type="checkbox" name="sat" value="None"> Saturday <br>
+            <input type="checkbox" name="sun" value="None"> Sunday <br>
         </form>
-        <form action="" method="POST" style="display:inline">
+        <form action="." method="POST" style="display:inline">
             <select name="hour1">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -77,7 +103,7 @@
             </select>
         </form>
         <br><p>to</p>
-        <form action="" method="POST" style="display:inline">
+        <form action="." method="POST" style="display:inline">
             <select name="hour2">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -111,8 +137,6 @@
                 <option value=0>A.M.</option>
                 <option value=1>P.M.</option>
             </select>
-        </form>
-        <form>
             <input type="submit" name='action' value="Add Event">
         </form>
     </div>
