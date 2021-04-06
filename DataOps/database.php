@@ -1,4 +1,5 @@
 <?php
+    global $db;
     $dsn = 'mysql:host=localhost;dbname=StudyTime';
     $username = 'mgs_user';
     $password = 'pa55word';
