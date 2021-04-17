@@ -31,7 +31,7 @@
 -->
 <table>
         <tr>
-            <th>Event Name</th>
+            <th>Time</th>
             <th>Mon</th>
             <th>Tues</th>
             <th>Weds</th>
@@ -40,6 +40,20 @@
             <th>Sat</th>
             <th>Sun</th>
         </tr>
+        <!--
+            okedoke, so my idea here is to have a huge array (8x288) that contains a color marker
+                corresponding to a css tag dealing only with color. I'm not totally sure if this
+                will work, but I'm 99% sure that it could. Then the event name would somehow be 
+                implemented to show in the html and batta bing batta boom we got ourselves a 
+                way of storing the event data. Only problem comes into play when we have 
+                conflicting times. I'm assuming that a hierarchy of precedence will be formed with
+                classes taking priority and then following up with office hours or something like
+                that. Or, I could just have multiple arrays. That might make more sense. Then 
+                somehow pull a rabbit out of nowhere and have the table format used to display it
+                split cells for conflicting events. That or conflicting events could be shaded red
+                where they overlap. So many ideas and not enough time. Still waiting on data as of
+                the time of my writing this. -  4/16/2021
+         -->
 
         <?php foreach($events as $event): ?>
         <tr>
