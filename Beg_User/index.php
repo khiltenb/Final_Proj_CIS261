@@ -86,40 +86,55 @@ if ($action == 'Advanced Mode')                                 //
     $timeH1 = filter_input(INPUT_POST, 'hour1');
     $timeM1 = filter_input(INPUT_POST, 'min1');
     $timeMer1 = filter_input(INPUT_POST, 'meridian1');
-    $timeH2 = filter_input(INPUT_POST, 'hour1');
-    $timeM2 = filter_input(INPUT_POST, 'min1');
-    $timeMer2 = filter_input(INPUT_POST, 'meridian1');
+    $timeH2 = filter_input(INPUT_POST, 'hour2');
+    $timeM2 = filter_input(INPUT_POST, 'min2');
+    $timeMer2 = filter_input(INPUT_POST, 'meridian2');
+    
+    //  Converts 0 or 1 to A.M. or P.M.
+    if ($timeMer1 == 0) {
+        $timeMer1 = 'A.M.';
+    } else {
+        $timeMer1 = 'P.M.';
+    }
+
+    if ($timeMer2 == 0) {
+        $timeMer2 = 'A.M.';
+    } else {
+        $timeMer2 = 'P.M.';
+    }
+
 
     $time_formatted = $timeH1 . ":" . $timeM1 . " " . $timeMer1 . ";" . $timeH2 . ":" . $timeM2 . " " . $timeMer2;
+    //  date/time object? (chatper 10 pg 294)
 
-    switch($day){
-        case ($day[0] = 'None'):
-            $day[0] = $time_formatted;
-            break;
-        case ($day[1] = 'None'):
-            $day[1] = $time_formatted;
-            break;
-        case ($day[2] = 'None'):
-            $day[2] = $time_formatted;
-            break;
-        case ($day[3] = 'None'):
-            $day[3] = $time_formatted;
-            break;
-        case ($day[4] = 'None'):
-            $day[4] = $time_formatted;
-            break;
-        case ($day[5] = 'None'):
-            $day[5] = $time_formatted;
-            break;
-        case ($day[6] = 'None'):
-            $day[6] = $time_formatted;
-            break;
-        };
+    for ($i = 0; $i < 7; $i++) {
+        if (isset($day[$i])) {
+            $day[$i] = $time_formatted;
+        } else {
+            $day[$i] = 'None';
+        }
+    }
 
-        $key_generated = rand();
+        $key_generated = rand();    // Just uses a random number for the primary key. Might need a more intuitive soln to this later
 
         addEvent($key_generated, $eventName, $day[0], $day[1], $day[2], $day[3], $day[4], $day[5], $day[6]);
+        $events = array();
         $events = getEvents();
         
     include('AddSchedAdv.php');                                 //
+} else if ($action == 'Remove Event') {                         //
+    $delID = filter_input(INPUT_POST, 'EvID');
+    
+    // Input Validation
+    if ($delID != NULL || $delID != ''){
+        delete_Event($delID);
+        $events = array();
+        $events = getEvents();
+        include('AddSchedAdv.php');
+    } else {
+        $errmessage = 'The entry failed to terminate. Please try again or (for the developer) fix the code.';//  Trigger to display error message and return to the page
+        include('AddSchedAdv.php');
+    }
+} else if ($action == 'Remove Class') {                         //
+    //This is an array thing. I'll work on that after I get home from work
 }

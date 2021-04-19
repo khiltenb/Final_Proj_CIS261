@@ -74,6 +74,8 @@
         </tr>
         <?php endforeach;?>
     </table>
+    <p>I'd meant to get the php and html that lays out the schedule on screen, but the SQL scripts and issues with them 
+    ended up being tougher than anticipated. I will have an alternate version of 
     <div class="addsched">
         <form action="." method="POST">
             <label>Add: </label>
