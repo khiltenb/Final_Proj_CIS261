@@ -63,7 +63,7 @@ function addEvent($eventNum, $eventName, $mon, $tue, $wed, $thu, $fri, $sat, $su
 
 function getEvents(){
     global $db;
-    $query = 'SELECT * FROM PersonalSchedule WHERE 1';
+    $query = 'SELECT * FROM PersonalSchedule';
     $statement = $db->prepare($query);
     $statement->execute();
     $Events = $statement->fetchAll();
