@@ -14,15 +14,13 @@
         course section.</p>
     <p>Placeholder for Entry of CRN numbers or Course IDs</p>
     <p>Lorem Ipsum</p>
-    <form action="CRNHandler.php" method="POST" style="display:inline">
-        <input type="text" name="crn1">
-        <input type="text" name="crn2">
-        <input type="text" name="crn3">
-        <input type="text" name="crn4">
-        <input type="text" name="crn5">
-        <input type="text" name="crn6">
-    </form>
-    <form action="InfoVerificationBeg.html" method="GET">
-        <input type="submit" value="continue">
+    <form action="index.php" method="POST" style="display:inline">
+        <input type="text" size=4 name="crn1">
+        <input type="text" size=4 name="crn2">
+        <input type="text" size=4 name="crn3">
+        <input type="text" size=4 name="crn4">
+        <input type="text" size=4 name="crn5">
+        <input type="text" size=4 name="crn6">
+        <input type="submit" name='action' value="Continue to Info Verification">
     </form>
 <?php include '../view/footer.php'; ?>

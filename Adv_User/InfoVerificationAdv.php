@@ -42,11 +42,11 @@
             <td><?php echo $class['CFRI']; ?></td>
             <td><?php echo $class['CSAT']; ?></td>
             <td><?php echo $class['CSUN']; ?></td>
-            <form action='.' method='POST'>
+            <td><form action='.' method='POST'>
                 <input type='hidden' name='action' value='Remove Class'>
                 <input type='hidden' name='crn' value='<?php echo $class['CRN'] ?>'>
                 <input type='submit' value='Delete'>
-            </form>
+            </form></tr>
         </tr>
         <?php endfor;?>
     </table>
