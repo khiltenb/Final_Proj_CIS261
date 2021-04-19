@@ -86,12 +86,26 @@ if ($action == 'Advanced Mode')                                 //
     $timeH1 = filter_input(INPUT_POST, 'hour1');
     $timeM1 = filter_input(INPUT_POST, 'min1');
     $timeMer1 = filter_input(INPUT_POST, 'meridian1');
-    $timeH2 = filter_input(INPUT_POST, 'hour1');
-    $timeM2 = filter_input(INPUT_POST, 'min1');
-    $timeMer2 = filter_input(INPUT_POST, 'meridian1');
+    $timeH2 = filter_input(INPUT_POST, 'hour2');
+    $timeM2 = filter_input(INPUT_POST, 'min2');
+    $timeMer2 = filter_input(INPUT_POST, 'meridian2');
+    
+    //  Converts 0 or 1 to A.M. or P.M.
+    if ($timeMer1 == 0) {
+        $timeMer1 = 'A.M.';
+    } else {
+        $timeMer1 = 'P.M.';
+    }
+
+    if ($timeMer2 == 0) {
+        $timeMer2 = 'A.M.';
+    } else {
+        $timeMer2 = 'P.M.';
+    }
 
 
     $time_formatted = $timeH1 . ":" . $timeM1 . " " . $timeMer1 . ";" . $timeH2 . ":" . $timeM2 . " " . $timeMer2;
+    //  date/time object? (chatper 10 pg 294)
 
     for ($i = 0; $i < 7; $i++) {
         if (isset($day[$i])) {
@@ -101,23 +115,26 @@ if ($action == 'Advanced Mode')                                 //
         }
     }
 
-        $key_generated = rand();    // Just uses a random number for the primary key. Might need a more intuitives soln to this later
+        $key_generated = rand();    // Just uses a random number for the primary key. Might need a more intuitive soln to this later
 
         addEvent($key_generated, $eventName, $day[0], $day[1], $day[2], $day[3], $day[4], $day[5], $day[6]);
-        $events =array();
+        $events = array();
         $events = getEvents();
         
-    include('AddSchedAdv.php');  
-} else if ($action == 'Remove Event') { 
+    include('AddSchedAdv.php');                                 //
+} else if ($action == 'Remove Event') {                         //
     $delID = filter_input(INPUT_POST, 'EvID');
     
     // Input Validation
     if ($delID != NULL || $delID != ''){
-        // Link to a delete function returning a true value or similar.
+        delete_Event($delID);
+        $events = array();
+        $events = getEvents();
+        include('AddSchedAdv.php');
     } else {
-        //  Trigger to display error message and return to the page
-        //  include('AddSched');
+        $errmessage = 'The entry failed to terminate. Please try again or (for the developer) fix the code.';//  Trigger to display error message and return to the page
+        include('AddSchedAdv.php');
     }
-} else if ($action == 'Remove Class') { 
+} else if ($action == 'Remove Class') {                         //
     //This is an array thing. I'll work on that after I get home from work
 }
