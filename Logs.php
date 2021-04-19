@@ -25,6 +25,10 @@ database by a little bit and batta bing batta boom we got ourselves a recourse. 
 that on the side to ensure that I have a functional project to present. This will be the end of my log
 for the night. 
 
+04/18/2021 - Checked the requirements, and it turns out that I need an sql script to run creating the 
+database and populating it with the data that I need for the project. As for the data issue, I am still
+waiting on the data, and will use the aforementioned recourse method if shtuff hits the fan. 
+
 mm/dd/yyyy - 
 */
 ?>
