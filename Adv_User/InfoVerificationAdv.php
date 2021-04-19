@@ -30,6 +30,7 @@
 
         <?php for($i = 0; $i < $count; $i++): ?>
         <?php $class = $classinformation[$i] ?>
+        <?php $delNum = array(); ?>
         <tr>
             <td><?php echo $class['CRN']; ?></td>
             <td><?php echo $class['CourseID']; ?></td>
@@ -41,7 +42,11 @@
             <td><?php echo $class['CFRI']; ?></td>
             <td><?php echo $class['CSAT']; ?></td>
             <td><?php echo $class['CSUN']; ?></td>
-            <td><input action="index.php" type="submit" name="action" id=<?php echo $i;?> value="remove"></td>
+            <form action='.' method='POST'>
+                <input type='hidden' name='action' value='Remove Class'>
+                <input type='hidden' name='crn' value='<?php echo $class['CRN'] ?>'>
+                <input type='submit' value='Delete'>
+            </form>
         </tr>
         <?php endfor;?>
     </table>

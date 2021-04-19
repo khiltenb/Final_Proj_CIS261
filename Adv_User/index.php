@@ -90,36 +90,34 @@ if ($action == 'Advanced Mode')                                 //
     $timeM2 = filter_input(INPUT_POST, 'min1');
     $timeMer2 = filter_input(INPUT_POST, 'meridian1');
 
+
     $time_formatted = $timeH1 . ":" . $timeM1 . " " . $timeMer1 . ";" . $timeH2 . ":" . $timeM2 . " " . $timeMer2;
 
-    switch($day){
-        case ($day[0] = 'None'):
-            $day[0] = $time_formatted;
-            break;
-        case ($day[1] = 'None'):
-            $day[1] = $time_formatted;
-            break;
-        case ($day[2] = 'None'):
-            $day[2] = $time_formatted;
-            break;
-        case ($day[3] = 'None'):
-            $day[3] = $time_formatted;
-            break;
-        case ($day[4] = 'None'):
-            $day[4] = $time_formatted;
-            break;
-        case ($day[5] = 'None'):
-            $day[5] = $time_formatted;
-            break;
-        case ($day[6] = 'None'):
-            $day[6] = $time_formatted;
-            break;
-        };
+    for ($i = 0; $i < 7; $i++) {
+        if (isset($day[$i])) {
+            $day[$i] = $time_formatted;
+        } else {
+            $day[$i] = 'None';
+        }
+    }
 
-        $key_generated = rand();
+        $key_generated = rand();    // Just uses a random number for the primary key. Might need a more intuitives soln to this later
 
         addEvent($key_generated, $eventName, $day[0], $day[1], $day[2], $day[3], $day[4], $day[5], $day[6]);
+        $events =array();
         $events = getEvents();
         
-    include('AddSchedAdv.php');                                 //
+    include('AddSchedAdv.php');  
+} else if ($action == 'Remove Event') { 
+    $delID = filter_input(INPUT_POST, 'EvID');
+    
+    // Input Validation
+    if ($delID != NULL || $delID != ''){
+        // Link to a delete function returning a true value or similar.
+    } else {
+        //  Trigger to display error message and return to the page
+        //  include('AddSched');
+    }
+} else if ($action == 'Remove Class') { 
+    //This is an array thing. I'll work on that after I get home from work
 }

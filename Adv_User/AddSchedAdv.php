@@ -39,6 +39,7 @@
             <th>Fri</th>
             <th>Sat</th>
             <th>Sun</th>
+            <th><th>
         </tr>
         <!--
             okedoke, so my idea here is to have a huge array (8x288) that contains a color marker
@@ -65,24 +66,25 @@
             <td><?php echo $event['EFRI']; ?></td>
             <td><?php echo $event['ESAT']; ?></td>
             <td><?php echo $event['ESUN']; ?></td>
-            <td><input action="index.php" type="submit" name="action" value="remove"></td>
-            <!-- id=<?php //echo $i;?> -->
+            <td><form action='.' method='POST'>
+                <input type='hidden' name='action' value='Remove Event'>
+                <input type='hidden' name='EvID' value='<?php echo $class['EventNum'] ?>'>
+                <input type='submit' value='Delete'>
+            </form></td>
         </tr>
         <?php endforeach;?>
     </table>
     <div class="addsched">
         <form action="." method="POST">
             <label>Add: </label>
-            <input type="text" size=15 name="EventName"><br>                                        
-            <input type="checkbox" name="mon" value="None"> Monday <br>
-            <input type="checkbox" name="tue" value="None"> Tuesday <br>
-            <input type="checkbox" name="wed" value="None"> Wednesday <br>
-            <input type="checkbox" name="thu" value="None"> Thursday <br>
-            <input type="checkbox" name="fri" value="None"> Friday <br>
-            <input type="checkbox" name="sat" value="None"> Saturday <br>
-            <input type="checkbox" name="sun" value="None"> Sunday <br>
-        </form>
-        <form action="." method="POST" style="display:inline">
+            <input type="text" name="EventName" value="" class="textbox"><br>                                        
+            <input type="checkbox" name="mon"> Monday <br>
+            <input type="checkbox" name="tue"> Tuesday <br>
+            <input type="checkbox" name="wed"> Wednesday <br>
+            <input type="checkbox" name="thu"> Thursday <br>
+            <input type="checkbox" name="fri"> Friday <br>
+            <input type="checkbox" name="sat"> Saturday <br>
+            <input type="checkbox" name="sun"> Sunday <br>
             <select name="hour1">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -116,9 +118,7 @@
                 <option value=0>A.M.</option>
                 <option value=1>P.M.</option>
             </select>
-        </form>
-        <br><p>to</p>
-        <form action="." method="POST" style="display:inline">
+        <br><a>to</a><br>
             <select name="hour2">
                 <option value="1">1</option>
                 <option value="2">2</option>
