@@ -1,7 +1,7 @@
 <!--
     Ken Hiltenbrand
     CIS261 Professor Daly
-    Final Project - AddSchedAdv.html
+    Final Project - AddSchedAdv.php
 -->
 <!DOCTYPE html>
 <!--php header inclusion -->
