@@ -65,14 +65,15 @@
             <td><?php echo $event['EFRI']; ?></td>
             <td><?php echo $event['ESAT']; ?></td>
             <td><?php echo $event['ESUN']; ?></td>
-            <td><input action="index.php" type="submit" name="action" id=<?php echo $i;?> value="remove"></td>
+            <td><input action="index.php" type="submit" name="action" value="remove"></td>
+            <!-- id=<?php //echo $i;?> -->
         </tr>
         <?php endforeach;?>
     </table>
     <div class="addsched">
         <form action="." method="POST">
             <label>Add: </label>
-            <input type="text" size=15 name="EventName">
+            <input type="text" size=15 name="EventName"><br>                                        
             <input type="checkbox" name="mon" value="None"> Monday <br>
             <input type="checkbox" name="tue" value="None"> Tuesday <br>
             <input type="checkbox" name="wed" value="None"> Wednesday <br>
