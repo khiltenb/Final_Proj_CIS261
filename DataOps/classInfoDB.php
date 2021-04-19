@@ -70,4 +70,14 @@ function getEvents(){
     $statement->closeCursor();
     return $Events;
 }
+
+function delete_Event($eventNum) {
+    global $db;
+
+    $query = 'DELETE FROM PersonalSchedule
+              WHERE EventNum = :eventNum';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':eventNum', $eventNum);
+    $statement->execute();
+}
 ?>

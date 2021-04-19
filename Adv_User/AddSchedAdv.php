@@ -68,7 +68,7 @@
             <td><?php echo $event['ESUN']; ?></td>
             <td><form action='.' method='POST'>
                 <input type='hidden' name='action' value='Remove Event'>
-                <input type='hidden' name='EvID' value='<?php echo $class['EventNum'] ?>'>
+                <input type='hidden' name='EvID' value='<?php echo $event['EventNum'] ?>'>
                 <input type='submit' value='Delete'>
             </form></td>
         </tr>
@@ -86,33 +86,33 @@
             <input type="checkbox" name="sat"> Saturday <br>
             <input type="checkbox" name="sun"> Sunday <br>
             <select name="hour1">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+                <option value=9>9</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
             </select>
             <a>:<a>
             <select name="min1">
-                <option value="00">00</option>
-                <option value="05">05</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-                <option value="30">30</option>
-                <option value="35">35</option>
-                <option value="40">40</option>
-                <option value="45">45</option>
-                <option value="50">50</option>
-                <option value="55">55</option>
+                <option value=00>00</option>
+                <option value=05>05</option>
+                <option value=10>10</option>
+                <option value=15>15</option>
+                <option value=20>20</option>
+                <option value=25>25</option>
+                <option value=30>30</option>
+                <option value=35>35</option>
+                <option value=40>40</option>
+                <option value=45>45</option>
+                <option value=50>50</option>
+                <option value=55>55</option>
             </select>
             <select name="meridian1">
                 <option value=0>A.M.</option>
@@ -120,33 +120,33 @@
             </select>
         <br><a>to</a><br>
             <select name="hour2">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+                <option value=9>9</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
             </select>
             <a>:<a>
             <select name="min2">
-                <option value="00">00</option>
-                <option value="05">05</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-                <option value="30">30</option>
-                <option value="35">35</option>
-                <option value="40">40</option>
-                <option value="45">45</option>
-                <option value="50">50</option>
-                <option value="55">55</option>
+                <option value=00>00</option>
+                <option value=05>05</option>
+                <option value=10>10</option>
+                <option value=15>15</option>
+                <option value=20>20</option>
+                <option value=25>25</option>
+                <option value=30>30</option>
+                <option value=35>35</option>
+                <option value=40>40</option>
+                <option value=45>45</option>
+                <option value=50>50</option>
+                <option value=55>55</option>
             </select>
             <select name="meridian2">
                 <option value=0>A.M.</option>
@@ -163,4 +163,7 @@
     <form action="." method="POST" style="display:inline">
         <input type="submit" name='action' value="Exit">
     </form>
+    <?php if (!empty($errmessage)){ ?>
+        <p><?php echo $errmessage; ?>
+    <?php } ?>
 <?php include '../view/footer.php'; ?>
