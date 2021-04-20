@@ -10,15 +10,15 @@
         die("Connection failed: " . $dbInit->connect_error);
     } 
 
-    $query = 'SHOW DATABASES LIKE :StudyTime';
+    $query = 'SHOW DATABASES LIKE StudyTime';
     $results = $dbInit->prepare($query);
     
 
 
     if (empty($results)){
-        $sql = "CREATE DATABASE StudyTime";
+        $sql = "CREATE DATABASE IF NOT EXISTS StudyTime";
         if ($dbInit->query($sql) === TRUE) {
-            echo "Database created successfully with the name StudyTime";
+            //echo "Database created successfully with the name StudyTime";
             $success = TRUE;
         } else {
             echo "Error creating database: " . $dbInit->error;
