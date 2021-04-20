@@ -43,6 +43,8 @@ if ($action == 'Advanced Mode')                                 //
     $crn[5] = filter_input(INPUT_POST, 'crn6');
     $count = 0;
     $classinformation = array();
+    $profCount = 0;
+    $professors = array();
     for ($i = 0; $i < 5; $i++)
     {
         if (!empty($crn[$i]))
@@ -54,8 +56,16 @@ if ($action == 'Advanced Mode')                                 //
             $classinformation[$i] = $oneClassInfo;
             //echo "classinformation[".$i."][Professor]=".$classinformation[$i]["Professor"]."<br>\n";
             $count++;
+            $classProf = $oneClassInfo['Professor'];
+
+            if (count($professors) == 0 || $classProf != $professors[$profCount]) {
+                $professors[$profCount] = get_OH($classProf);
+                $profCount++;
+                //echo $classinformation[$i]['Professor'] . 'should be returning "Tim Moriarty"';
+            }
         }
     }
+    
     include('InfoVerificationAdv.php');                         //
 } else if ($action == 'Continue to the Prototype Schedule') {   //
     // stuff?
@@ -136,5 +146,7 @@ if ($action == 'Advanced Mode')                                 //
         include('AddSchedAdv.php');
     }
 } else if ($action == 'Remove Class') {                         //
-    //This is an array thing. I'll work on that after I get home from work
+    //This is an array thing, but there's a scope issue, which I'm actively looking to solve.
+} else if ($action == 'Remove OH') {
+    //Similar issue to the preceding section.
 }

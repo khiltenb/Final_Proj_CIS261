@@ -28,6 +28,19 @@ function get_ClassInfo($crn) {
     return $classInfo;
 }
 
+function get_OH($prof) {
+    global $db;
+
+    $query = 'SELECT * FROM ProfessorInfo
+              WHERE Professor = :prof';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':prof', $prof);
+        $statement->execute();
+        $profInfo = $statement->fetch();
+        $statement->closeCursor();
+        return $profInfo;
+}
+
 
 function getProf($crn) {
     global $db;
