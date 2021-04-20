@@ -3,6 +3,21 @@
     CIS261 Professor Daly
     Final Project - index.html
 -->
+
+<?php global $ClassInformation;     // I know that globals are not good practice, but I think it's
+                                    //      appropriate for this case.
+    
+    if ($slassInformation == NULL || $classInformation == '') {
+        $classInformation = array();
+    }
+
+      global $count;
+
+    if ($count = NULL || $count == '') {
+        $count = 0; 
+    }
+?>
+
 <?php $path ='';?>
 <?php include 'view/header.php'; ?>
     <h1>StudyTime Management Tool</h1>

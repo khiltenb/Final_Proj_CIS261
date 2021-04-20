@@ -2,7 +2,7 @@
 /*
 Ken Hiltenbrandj
 CIS261.980 - Professor Garry Daly
-Final Project index.php for the advanced user path
+Final Project index.php for the novice user path
 */
 
 require('../DataOps/database.php');     //  Makes it so we can acces the database that we want
@@ -25,14 +25,14 @@ if ($action == NULL){
     $action = filter_input(INPUT_GET, 'action');
     if ($action == NULL)
     {
-        $action = 'Advanced Mode';
+        $action = 'Beginner Mode';
     }
 }
 
 //  This is where things get messy real quick. I'm planning to use this
-if ($action == 'Advanced Mode')                                 //
+if ($action == 'Beginner Mode')                                 //
 {                                                               //
-    include('EnterCRNAdv.php');                                 //
+    include('EnterCRNBeg.php');                                 //
 } else if ($action == 'Continue to Info Verification') {        //
     $crn = array();
     $crn[0] = filter_input(INPUT_POST, 'crn1');
@@ -43,6 +43,8 @@ if ($action == 'Advanced Mode')                                 //
     $crn[5] = filter_input(INPUT_POST, 'crn6');
     $count = 0;
     $classinformation = array();
+    $profCount = 0;
+    $professors = array();
     for ($i = 0; $i < 5; $i++)
     {
         if (!empty($crn[$i]))
@@ -54,18 +56,26 @@ if ($action == 'Advanced Mode')                                 //
             $classinformation[$i] = $oneClassInfo;
             //echo "classinformation[".$i."][Professor]=".$classinformation[$i]["Professor"]."<br>\n";
             $count++;
+            $classProf = $oneClassInfo['Professor'];
+
+            if (count($professors) == 0 || $classProf != $professors[$profCount]) {
+                $professors[$profCount] = get_OH($classProf);
+                $profCount++;
+                //echo $classinformation[$i]['Professor'] . 'should be returning "Tim Moriarty"';
+            }
         }
     }
-    include('InfoVerificationAdv.php');                         //
+    
+    include('InfoVerificationBeg.php');                         //
 } else if ($action == 'Continue to the Prototype Schedule') {   //
     // stuff?
-    include('ProtoSchedAdv.php');                               //
+    include('ProtoSchedBeg.php');                               //
 } else if ($action == 'Continue to Modified Schedule') {        //
     // stuff?
-    include('AddSchedAdv.php');                                 //
+    include('AddSchedBeg.php');                                 //
 } else if ($action == 'Enter Other CRNs') {                     //
     // stuff
-    include('EnterCRNAdv.php');                                 //
+    include('EnterCRNBef.php');                                 //
 } else if ($action == 'Download') {                             //
     // stuff
     include('../Download.php');                                 //
@@ -121,7 +131,7 @@ if ($action == 'Advanced Mode')                                 //
         $events = array();
         $events = getEvents();
         
-    include('AddSchedAdv.php');                                 //
+    include('AddSchedBeg.php');                                 //
 } else if ($action == 'Remove Event') {                         //
     $delID = filter_input(INPUT_POST, 'EvID');
     
@@ -130,11 +140,13 @@ if ($action == 'Advanced Mode')                                 //
         delete_Event($delID);
         $events = array();
         $events = getEvents();
-        include('AddSchedAdv.php');
+        include('AddSchedBeg.php');
     } else {
         $errmessage = 'The entry failed to terminate. Please try again or (for the developer) fix the code.';//  Trigger to display error message and return to the page
-        include('AddSchedAdv.php');
+        include('AddSchedBeg.php');
     }
 } else if ($action == 'Remove Class') {                         //
-    //This is an array thing. I'll work on that after I get home from work
+    //This is an array thing, but there's a scope issue, which I'm actively looking to solve.
+} else if ($action == 'Remove OH') {
+    //Similar issue to the preceding section.
 }
