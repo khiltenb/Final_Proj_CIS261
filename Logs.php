@@ -29,6 +29,12 @@ for the night.
 database and populating it with the data that I need for the project. As for the data issue, I am still
 waiting on the data, and will use the aforementioned recourse method if shtuff hits the fan. 
 
+05/03/2021 - Got the data and have an idea on how to select the data needed and how to insert it into 
+the database. I still need to figure out how to display the data, and I'm kinda nervous to even try to
+do it as I really don't think I'll be successful without some sort of assistance or ideas on how to 
+approach it from the internet. I won't copy and paste or even paraphrase the code, but I may take heavy 
+inspiration from what I find there.
+
 mm/dd/yyyy - 
 */
 ?>

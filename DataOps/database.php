@@ -1,8 +1,8 @@
 <?php
     
     $host = "localhost";
-    $username = "root";
-    $password = "";
+    $username = "cis261_04";
+    $password = "X00371971";
     $success = FALSE;
     
     $dbInit = new mysqli($host, $username, $password);
@@ -10,15 +10,15 @@
         die("Connection failed: " . $dbInit->connect_error);
     } 
 
-    $query = 'SHOW DATABASES LIKE StudyTime';
+    $query = 'SHOW DATABASES LIKE cis261_04';
     $results = $dbInit->prepare($query);
     
 
 
     if (empty($results)){
-        $sql = "CREATE DATABASE IF NOT EXISTS StudyTime";
+        $sql = "CREATE DATABASE IF NOT EXISTS cis261_04";
         if ($dbInit->query($sql) === TRUE) {
-            //echo "Database created successfully with the name StudyTime";
+            //echo "Database created successfully with the name cis261_04";
             $success = TRUE;
         } else {
             echo "Error creating database: " . $dbInit->error;
@@ -26,7 +26,7 @@
     }   
 
     if ($success) {
-        $query0 = 'USE `StudyTime`;';
+        $query0 = 'USE `cis261_04`;';
         $dbInit->query($query0);
 
         $query1 = 'CREATE TABLE ClassInfo
@@ -91,6 +91,23 @@
                   ('Maya Tolappa', '8.am-2.pm', '7.am-8:30.am;12.pm-2.pm', '8.am-2.pm', '7.am-8:30.am;12.pm-2.pm', '12.pm-3.pm', '11.am-2.pm', 'None'),
                   ('Tim Moriarty', '11.am-1:20.pm;3.pm-5.pm', '11.am-1:20.pm;3.pm-5.pm', '11.am-1:20.pm;3.pm-5.pm', '11.am-1:20.pm;3.pm-5.pm', '9.am-2.pm', '9.am-12.pm', 'None');";
         $dbInit->query($query5);
+        
+        $query6 = "CREATE TABLE ClassInfoTemp
+                   (
+                      dex         INT         NOT NULL,
+                      CRN         INT         NOT NULL,
+                      CourseID    VARCHAR(60) NOT NULL,
+                      Professor   VARCHAR(60) NOT NULL,
+                      CMON        VARCHAR(60) NOT NULL,
+                      CTUE        VARCHAR(60) NOT NULL,
+                      CWED        VARCHAR(60) NOT NULL,
+                      CTHU        VARCHAR(60) NOT NULL,
+                      CFRI        VARCHAR(60) NOT NULL,
+                      CSAT        VARCHAR(60) NOT NULL,
+                      CSUN        VARCHAR(60) NOT NULL,
+                      PRIMARY KEY (dex)
+                   )";
+        $dbInit->query($query6);
         }
 
     $dbInit->close();
@@ -99,9 +116,9 @@
 // Need section that creates and populates database if not already present.
 //  Use .txt file and a set of functions? Needs yet to be determined. 
     global $db;
-    $dsn = 'mysql:host=localhost;dbname=StudyTime';
-    $username = 'root';
-    $password = '';
+    $dsn = 'mysql:host=localhost;dbname=cis261_04';
+    $username = 'cis261_04';
+    $password = 'X00371971';
 
     try {
         $db = new PDO($dsn, $username, $password);

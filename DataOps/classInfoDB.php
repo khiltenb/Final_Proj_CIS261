@@ -4,7 +4,7 @@
 function get_ClassInfo($crn) {
     global $db;
 
-    // $dsn = 'mysql:host=localhost;dbname=StudyTime';
+    // $dsn = 'mysql:host=localhost;dbname=cis261_04';
     // $username = 'mgs_user';
     // $password = 'pa55word';
 
@@ -28,6 +28,51 @@ function get_ClassInfo($crn) {
     return $classInfo;
 }
 
+function setTemp($index, $crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu, $cfri, $csat, $csun, $user) {
+    global $db;
+    $query = "INSERT INTO ClassInfoTemp
+                    (dex, CRN, CourseID, Professor, CMON, CTUE, CWED, CTHU, CFRI, CSAT, CSUN)
+                Values
+                    (:dex, :crn, :course, :prof, :mon, :tue, :wed, :thu, :fri, :sat, :sun)";
+    $statement = $db->prepare($query);
+    $statement ->bindValue(':dex', $index);
+    $statement ->bindValue(':crn', $crn);
+    $statement ->bindValue(':course', $courseID);
+    $statement ->bindValue(':prof', $professor);
+    $statement ->bindValue(':mon', $cmon);
+    $statement ->bindValue(':tue', $ctue);
+    $statement ->bindValue(':wed', $cwed);
+    $statement ->bindValue(':thu', $cthu);
+    $statement ->bindValue(':fri', $cfri);
+    $statement ->bindValue(':sat', $csat);
+    $statement ->bindValue(':sun', $csun);
+    try {
+        $statement->execute();
+    } catch (Exception $e) {
+        $error_message = $e->getMessage();
+        $path = $user.'_User/EnterCRN'.$user.'.php';
+        include('../errors/database_error.php');
+        exit();
+    }    
+}
+
+function getTemp($index) {
+    global $db;
+    $query = "SELECT * FROM ClassInfoTemp 
+              WHERE dex = :dex";
+    $statement = $db->prepare($query);
+    $statement ->bindValue(':dex', $index);
+    $statement->execute();
+    $classInfo = $statement->fetch();
+    $statement->closeCursor();
+    return $classInfo;
+}
+
+function remove_temp($crn) {
+    //
+}
+
+/*
 function get_OH($prof) {
     global $db;
 
@@ -52,6 +97,7 @@ function getProf($crn) {
     $statement->closeCursor();
     return $statement;
 }
+*/
 
 function addEvent($eventNum, $eventName, $mon, $tue, $wed, $thu, $fri, $sat, $sun){
     global $db;
@@ -92,5 +138,26 @@ function delete_Event($eventNum) {
     $statement = $db->prepare($query);
     $statement->bindValue(':eventNum', $eventNum);
     $statement->execute();
+}
+
+function add_class($crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu, $cfri, $csat, $csun) {
+    global $db;
+    $query = "INSERT INTO ClassInfo
+                    (CRN, CourseID, Professor, CMON, CTUE, CWED, CTHU, CFRI, CSAT, CSUN)
+                Values
+                    (:crn, :course, :prof, :mon, :tue, :wed, :thu, :fri, :sat, :sun)";
+    $statement = $db->prepare($query);
+    $statement->bind_Value(':crn', $crn);
+    $statement->bind_Value(':course', $courseID);
+    $statement->bind_Value(':prof', $professor);
+    $statement->bind_Value(':mon', $cmon);
+    $statement->bind_Value(':tue', $ctue);
+    $statement->bind_Value(':wed', $cwed);
+    $statement->bind_Value(':thu', $cthu);
+    $statement->bind_Value(':fri', $cfri);
+    $statement->bind_Value(':sat', $csat);
+    $statement->bind_Value(':sun', $csun);
+    $statement->execute();
+
 }
 ?>
