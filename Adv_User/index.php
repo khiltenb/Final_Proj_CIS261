@@ -7,9 +7,9 @@ Final Project index.php for the advanced user path
 
 require('../DataOps/database.php');     //  Makes it so we can acces the database that we want
 require('../DataOps/classInfoDB.php');  //
-if (!isset($_SESSION['count'])) {
-    $_SESSION['count'] = 0;
-}
+//if (!isset($_SESSION['count'])) {
+//    $_SESSION['count'] = 0;
+//}
 
 /*
 Here's where things get a little messy. I had idead about how to organize the data and how I'd
@@ -51,15 +51,17 @@ if ($action == 'Advanced Mode')                                 //
         {
             $crn[$i] = intval($crn[$i]);
             $oneCI = get_ClassInfo($crn[$i]);
-            setTemp($_SESSION['count'], $oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
-            $_SESSION['count'] += 1;
+            $recCheck = tempRecordsCheck($crn[$i]);
+            if ($recCheck == '' || $recCheck == NULL) {
+                setTemp($oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], 
+                $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
+                $_SESSION['count'] += 1;
+            }
+            
         }
     }
-    $oneCI = array();
-    for ($i = 0; $i < $_SESSION['count']; $i++) {
-        $oneCI = getTemp($i);
-        $classinformation[$i] = $oneCI;
-    }
+    //$oneCI = array();
+    $classinformation = getTemp();
     
     include('InfoVerificationAdv.php');                         //
 } else if ($action == 'Continue to the Prototype Schedule') {   //
@@ -140,8 +142,10 @@ if ($action == 'Advanced Mode')                                 //
         $errmessage = 'The entry failed to terminate. Please try again or (for the developer) fix the code.';//  Trigger to display error message and return to the page
         include('AddSchedAdv.php');
     }
-} else if ($action == 'Remove Class') {                         //
-    //This is an array thing, but there's a scope issue, which I'm actively looking to solve.
-} else if ($action == 'Remove OH') {
-    //Similar issue to the preceding section.
+} else if ($action == 'Remove Class') {    
+    $tDelID = filter_input(INPUT_POST, 'recordNum');                     //
+    remove_Temp($tDelID);
+    $classinformation = array();
+    $classinformation = getTemp();
+    include('InfoVerificationAdv.php');
 }

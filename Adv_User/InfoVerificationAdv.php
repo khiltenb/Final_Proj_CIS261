@@ -27,10 +27,11 @@
             <th>Sat</th>
             <th>Sun</th>
         </tr>
-        
+
         <?php $class = array(); ?>
-        <?php for($i = 0; $i < $_SESSION['count']; $i++): ?>
-        <?php $class = $classinformation[$i] ?>
+        <?php //for($i = 0; $i <= $_SESSION['count']; $i++): ?>
+        <?php //$class = $classinformation[$i] ?>
+        <?php foreach($classinformation as $class):?>
         <tr>
             <td><?php echo $class['CRN']; ?></td>
             <td><?php echo $class['CourseID']; ?></td>
@@ -44,11 +45,11 @@
             <td><?php echo $class['CSUN']; ?></td>
             <td><form action='.' method='POST'>
                 <input type='hidden' name='action' value='Remove Class'>
-                <input type='hidden' name='recordNum' value='<?php echo $i ?>'>
+                <input type='hidden' name='recordNum' value='<?php echo $class['CRN'] ?>'>
                 <input type='submit' value='Delete'>
-            </form></tr>
+            </form></td>
         </tr>
-        <?php endfor;?>
+        <?php endforeach;?>
     </table>
     <!--<table>
         <tr>

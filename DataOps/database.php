@@ -94,7 +94,6 @@
         
         $query6 = "CREATE TABLE ClassInfoTemp
                    (
-                      dex         INT         NOT NULL,
                       CRN         INT         NOT NULL,
                       CourseID    VARCHAR(60) NOT NULL,
                       Professor   VARCHAR(60) NOT NULL,
@@ -105,7 +104,7 @@
                       CFRI        VARCHAR(60) NOT NULL,
                       CSAT        VARCHAR(60) NOT NULL,
                       CSUN        VARCHAR(60) NOT NULL,
-                      PRIMARY KEY (dex)
+                      PRIMARY KEY (CRN)
                    )";
         $dbInit->query($query6);
         }
