@@ -3,19 +3,6 @@
 
 function get_ClassInfo($crn) {
     global $db;
-
-    // $dsn = 'mysql:host=localhost;dbname=cis261_04';
-    // $username = 'mgs_user';
-    // $password = 'pa55word';
-
-    // try {
-    //     $db = new PDO($dsn, $username, $password);
-    // } catch (PDOException $e) {
-    //     $error_message = $e->getMessage();
-    //     include('../errors/database_error.php');
-    //     exit();
-    // }
-
     $query = 'SELECT * FROM ClassInfo
               WHERE CRN = :crn';
     $statement = $db->prepare($query);
@@ -28,14 +15,13 @@ function get_ClassInfo($crn) {
     return $classInfo;
 }
 
-function setTemp($index, $crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu, $cfri, $csat, $csun, $user) {
+function setTemp($crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu, $cfri, $csat, $csun, $user) {
     global $db;
     $query = "INSERT INTO ClassInfoTemp
-                    (dex, CRN, CourseID, Professor, CMON, CTUE, CWED, CTHU, CFRI, CSAT, CSUN)
+                    (CRN, CourseID, Professor, CMON, CTUE, CWED, CTHU, CFRI, CSAT, CSUN)
                 Values
-                    (:dex, :crn, :course, :prof, :mon, :tue, :wed, :thu, :fri, :sat, :sun)";
+                    (:crn, :course, :prof, :mon, :tue, :wed, :thu, :fri, :sat, :sun)";
     $statement = $db->prepare($query);
-    $statement ->bindValue(':dex', $index);
     $statement ->bindValue(':crn', $crn);
     $statement ->bindValue(':course', $courseID);
     $statement ->bindValue(':prof', $professor);
@@ -46,6 +32,9 @@ function setTemp($index, $crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu
     $statement ->bindValue(':fri', $cfri);
     $statement ->bindValue(':sat', $csat);
     $statement ->bindValue(':sun', $csun);
+    $statement->execute();
+    
+    /*
     try {
         $statement->execute();
     } catch (Exception $e) {
@@ -53,24 +42,40 @@ function setTemp($index, $crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu
         $path = $user.'_User/EnterCRN'.$user.'.php';
         include('../errors/database_error.php');
         exit();
-    }    
+    }    */
 }
 
-function getTemp($index) {
+function getTemp() {
     global $db;
-    $query = "SELECT * FROM ClassInfoTemp 
-              WHERE dex = :dex";
+    $query = "SELECT * FROM ClassInfoTemp";
     $statement = $db->prepare($query);
-    $statement ->bindValue(':dex', $index);
     $statement->execute();
-    $classInfo = $statement->fetch();
+    $classInfo = $statement->fetchAll();
     $statement->closeCursor();
     return $classInfo;
 }
 
-function remove_temp($crn) {
-    //
+function tempRecordsCheck($crnNum) {
+    global $db;
+    $query = "SELECT * FROM ClassInfoTemp
+              WHERE CRN = :crn";
+    $statement = $db->prepare($query);
+    $statement ->bindValue(':crn',$crnNum);
+    $statement->execute();
+    $record = $statement->fetch();
+    $statement->closeCursor();
+    return $record;
 }
+
+function remove_temp($crn) {
+    global $db;
+
+    $query = 'DELETE FROM ClassInfoTemp
+              WHERE CRN = :crn';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':crn', $crn);
+    $statement->execute();
+ }
 
 /*
 function get_OH($prof) {
@@ -85,7 +90,6 @@ function get_OH($prof) {
         $statement->closeCursor();
         return $profInfo;
 }
-
 
 function getProf($crn) {
     global $db;
