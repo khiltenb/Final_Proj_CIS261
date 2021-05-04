@@ -4,17 +4,12 @@
     Final Project - index.html
 -->
 
-<?php global $ClassInformation;     // I know that globals are not good practice, but I think it's
+<?php global $count;     // I know that globals are not good practice, but I think it's
                                     //      appropriate for this case.
-    
-    if ($slassInformation == NULL || $classInformation == '') {
-        $classInformation = array();
-    }
-
-      global $count;
-
-    if ($count = NULL || $count == '') {
-        $count = 0; 
+    $lifetime = 60 * 60 * 24 * 30 * 6; // about 6 months in seconds
+    session_start();
+    if (!isset($_SESSION['count'])) {
+        $_SESSION['count'] = 0;
     }
 ?>
 

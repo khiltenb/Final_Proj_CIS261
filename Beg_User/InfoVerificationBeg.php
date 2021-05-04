@@ -28,8 +28,7 @@
             <th>Sun</th>
         </tr>
 
-        <?php for($i = 0; $i < $count; $i++): ?>
-        <?php $class = $classinformation[$i] ?>
+        <?php foreach($classInformation as $class): ?>
         <tr>
             <td><?php echo $class['CRN']; ?></td>
             <td><?php echo $class['CourseID']; ?></td>
@@ -47,8 +46,9 @@
                 <input type='submit' value='Delete'>
             </form></tr>
         </tr>
-        <?php endfor;?>
+        <?php endforeach;?>
     </table>
+    <!--
     <table>
         <tr>
             <th>Prof.</th>
@@ -61,24 +61,25 @@
             <th>Sun</th>
         </tr>
 
-        <?php for($o = 0; $o < $profCount; $o++): ?>
-        <?php $prof = $professors[$o] ?>
+        <?php //for($o = 0; $o < $profCount; $o++): ?>
+        <?php //$prof = $professors[$o] ?>
         <tr>
-            <td><?php echo $prof['Professor']; ?></td>
-            <td><?php echo $prof['PMON']; ?></td>
-            <td><?php echo $prof['PTUE']; ?></td>
-            <td><?php echo $prof['PWED']; ?></td>
-            <td><?php echo $prof['PTHU']; ?></td>
-            <td><?php echo $prof['PFRI']; ?></td>
-            <td><?php echo $prof['PSAT']; ?></td>
-            <td><?php echo $prof['PSUN']; ?></td>
+            <td><?php //echo $prof['Professor']; ?></td>
+            <td><?php //echo $prof['PMON']; ?></td>
+            <td><?php //echo $prof['PTUE']; ?></td>
+            <td><?php //echo $prof['PWED']; ?></td>
+            <td><?php //echo $prof['PTHU']; ?></td>
+            <td><?php //echo $prof['PFRI']; ?></td>
+            <td><?php //echo $prof['PSAT']; ?></td>
+            <td><?php //echo $prof['PSUN']; ?></td>
             <td><form action='.' method='POST'>
                 <input type='hidden' name='action' value='Remove OH'>
-                <input type='hidden' name='recordNum' value='<?php echo $i ?>'>
+                <input type='hidden' name='recordNum' value='<?php //echo $i ?>'>
                 <input type='submit' value='Delete'>
             </form></tr>
         </tr>
-        <?php endfor;?>
+        <?php //endfor;?>
+        -->
     </table>
     <form action="." method="POST" style="display:inline">
         <input type="submit" name='action' value="Enter Other CRNs">

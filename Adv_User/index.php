@@ -7,6 +7,9 @@ Final Project index.php for the advanced user path
 
 require('../DataOps/database.php');     //  Makes it so we can acces the database that we want
 require('../DataOps/classInfoDB.php');  //
+if (!isset($_SESSION['count'])) {
+    $_SESSION['count'] = 0;
+}
 
 /*
 Here's where things get a little messy. I had idead about how to organize the data and how I'd
@@ -41,29 +44,21 @@ if ($action == 'Advanced Mode')                                 //
     $crn[3] = filter_input(INPUT_POST, 'crn4');
     $crn[4] = filter_input(INPUT_POST, 'crn5');
     $crn[5] = filter_input(INPUT_POST, 'crn6');
-    $count = 0;
     $classinformation = array();
-    $profCount = 0;
-    $professors = array();
     for ($i = 0; $i < 5; $i++)
     {
         if (!empty($crn[$i]))
         {
             $crn[$i] = intval($crn[$i]);
-            //echo "looking up crn for crn[".$i."]=".$crn[$i]."<br>\n";
-            $oneClassInfo = get_ClassInfo($crn[$i]);
-            //echo "oneClassInfo[Professor]=".$oneClassInfo["Professor"]."<br>\n";
-            $classinformation[$i] = $oneClassInfo;
-            //echo "classinformation[".$i."][Professor]=".$classinformation[$i]["Professor"]."<br>\n";
-            $count++;
-            $classProf = $oneClassInfo['Professor'];
-
-            if (count($professors) == 0 || $classProf != $professors[$profCount]) {
-                $professors[$profCount] = get_OH($classProf);
-                $profCount++;
-                //echo $classinformation[$i]['Professor'] . 'should be returning "Tim Moriarty"';
-            }
+            $oneCI = get_ClassInfo($crn[$i]);
+            setTemp($_SESSION['count'], $oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
+            $_SESSION['count'] += 1;
         }
+    }
+    $oneCI = array();
+    for ($i = 0; $i < $_SESSION['count']; $i++) {
+        $oneCI = getTemp($i);
+        $classinformation[$i] = $oneCI;
     }
     
     include('InfoVerificationAdv.php');                         //
