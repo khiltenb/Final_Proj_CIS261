@@ -1,5 +1,8 @@
 <?php
-    
+    // THIS MAY ALL NEED TO BE CHANGED!! NOT FINAL YET!!!
+
+    //Commenting out section from HERE***
+    /*
     $host = "localhost";
     $username = "cis261_04";
     $password = "X00371971";
@@ -29,7 +32,7 @@
         $query0 = 'USE `cis261_04`;';
         $dbInit->query($query0);
 
-        $query1 = 'CREATE TABLE ClassInfo
+        $query1 = 'CREATE TABLE IF NOT EXISTS ClassInfo
                   (
                       CRN         INT         NOT NULL,
                       CourseID    VARCHAR(60) NOT NULL,
@@ -46,7 +49,7 @@
         $statement1 = $dbInit->query($query1);
         //echo 'Tried to create table ClassInfo';
 
-        $query2 = 'CREATE TABLE ProfessorInfo
+        $query2 = 'CREATE TABLE IF NOT EXISTS ProfessorInfo
                   (
                       Professor   VARCHAR(60) NOT NULL,
                       PMON        VARCHAR(60) NOT NULL,
@@ -59,9 +62,14 @@
                       PRIMARY KEY (Professor)
                   );';
         $statement2 = $dbInit->query($query2);
+        if ($statement2) {
+            echo "Statement two is true";
+        } else {
+            echo "Statement two is false";
+        }
         //echo 'Tried to create table ProfessorInfo';
 
-        $query3 = 'CREATE TABLE PersonalSchedule
+        $query3 = 'CREATE TABLE IF NOT EXISTS PersonalSchedule
                    (
                        EventNum    VARCHAR(60) NOT NULL,
                        EventName   VARCHAR(60) NOT NULL,
@@ -110,20 +118,88 @@
         }
 
     $dbInit->close();
+    // TO HERE*** Once the table creating and population code.
+    */
 
 
-// Need section that creates and populates database if not already present.
-//  Use .txt file and a set of functions? Needs yet to be determined. 
+//  This section assumes that the cis261_04 is already present, but may not have all the tables. Since I didn't have the 
+//      professor information (office hours mainly) I decided that the professorInfo table was unnecessary and didn't need
+//      to be included. Further database management may be used here, but it is more likely that I'll do it in the first or
+//      second index.php file.
     global $db;
     $dsn = 'mysql:host=localhost;dbname=cis261_04';
     $username = 'cis261_04';
     $password = 'X00371971';
 
-    try {
-        $db = new PDO($dsn, $username, $password);
-    } catch (PDOException $e) {
-        $error_message = $e->getMessage();
-        include('../errors/database_error.php');
-        exit();
+    try {                                               
+        $db = new PDO($dsn, $username, $password);      
+    } catch (PDOException $e) {                         
+        $error_message = $e->getMessage();              
+        include('../errors/database_error.php');        
+        exit();                                         
     }
+
+    $query1 = 'CREATE TABLE IF NOT EXISTS ClassInfo
+              (
+                  CRN         INT         NOT NULL,
+                  CourseID    VARCHAR(60) NOT NULL,
+                  Professor   VARCHAR(60) NOT NULL REFERENCES ProfessorInfo,
+                  CMON        VARCHAR(60) NOT NULL,
+                  CTUE        VARCHAR(60) NOT NULL,
+                  CWED        VARCHAR(60) NOT NULL,
+                  CTHU        VARCHAR(60) NOT NULL,
+                  CFRI        VARCHAR(60) NOT NULL,
+                  CSAT        VARCHAR(60) NOT NULL,
+                  CSUN        VARCHAR(60) NOT NULL,
+                  PRIMARY KEY (CRN)
+              );';
+    try {
+        $statement1 = $db->query($query1);
+    } catch (PDOException $e) {
+        $statement1 = false;
+    }
+
+    $query2 = 'CREATE TABLE IF NOT EXISTS PersonalSchedule
+              (
+                  EventNum    VARCHAR(60) NOT NULL,
+                  EventName   VARCHAR(60) NOT NULL,
+                  EMON        VARCHAR(60) NOT NULL,
+                  ETUE        VARCHAR(60) NOT NULL,
+                  EWED        VARCHAR(60) NOT NULL,
+                  ETHU        VARCHAR(60) NOT NULL,
+                  EFRI        VARCHAR(60) NOT NULL,
+                  ESAT        VARCHAR(60) NOT NULL,
+                  ESUN        VARCHAR(60) NOT NULL,
+                  PRIMARY KEY (EventNum)
+              );';
+    try {
+        $statement2 = $db->query($query2);
+    } catch (PDOException $e) {
+        $statement2 = false;
+    }
+
+    $query3 = "CREATE TABLE ClassInfoTemp
+              (
+                  CRN         INT         NOT NULL,
+                  CourseID    VARCHAR(60) NOT NULL,
+                  Professor   VARCHAR(60) NOT NULL,
+                  CMON        VARCHAR(60) NOT NULL,
+                  CTUE        VARCHAR(60) NOT NULL,
+                  CWED        VARCHAR(60) NOT NULL,
+                  CTHU        VARCHAR(60) NOT NULL,
+                  CFRI        VARCHAR(60) NOT NULL,
+                  CSAT        VARCHAR(60) NOT NULL,
+                  CSUN        VARCHAR(60) NOT NULL,
+                  PRIMARY KEY (CRN)
+               )";
+        try {
+            $statement3 = $db->query($query3);
+        } catch (PDOException $e) {
+            $statement3 = false;
+        }
+
+        if (!$statement1) { //
+            // Maybe make while loop that takes from a csv and populates the classInfo table?
+
+        }
 ?>

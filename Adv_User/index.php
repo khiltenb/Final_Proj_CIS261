@@ -55,7 +55,7 @@ if ($action == 'Advanced Mode')                                 //
             if ($recCheck == '' || $recCheck == NULL) {
                 setTemp($oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], 
                 $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
-                $_SESSION['count'] += 1;
+                //$_SESSION['count'] += 1;
             }
             
         }
