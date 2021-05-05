@@ -76,7 +76,7 @@
             <td><?php //echo $prof['PSUN']; ?></td>
             <td><form action='.' method='POST'>
                 <input type='hidden' name='action' value='Remove OH'>
-                <input type='hidden' name='recordNum' value='<?php echo $i ?>'>
+                <input type='hidden' name='recordNum' value='<?php // echo $i ?>'>
                 <input type='submit' value='Delete'>
             </form></tr>
         </tr>
