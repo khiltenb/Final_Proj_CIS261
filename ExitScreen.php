@@ -3,8 +3,8 @@
     CIS261 Professor Daly
     Final Project - ExitScreen.html
 -->
-<?php $path ='';?>
-<?php include 'view/header.php'; ?>
+<?php $path = $path2;?>
+<?php include('view/header.php'); ?>
     <h1>Exit Screen</h1>
     <p>
         The End! Well done! You have successfully traversed this tool and utilized it to put together an academic schedule

@@ -47,7 +47,7 @@ if ($action == 'Advanced Mode')                                 //
     $classinformation = array();
     for ($i = 0; $i < 5; $i++)
     {
-        if (!empty($crn[$i]))
+        if (!empty($crn[$i])) // Need something to validate integer value here.
         {
             $crn[$i] = intval($crn[$i]);
             $oneCI = get_ClassInfo($crn[$i]);
@@ -57,7 +57,6 @@ if ($action == 'Advanced Mode')                                 //
                 $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
                 //$_SESSION['count'] += 1;
             }
-            
         }
     }
     //$oneCI = array();
@@ -78,6 +77,8 @@ if ($action == 'Advanced Mode')                                 //
     include('../Download.php');                                 //
 } else if ($action == 'Exit') {                                 //
     // stuff
+    $path2 = "../";
+    $user = "Adv";
     include('../ExitScreen.php');                               //
 } else if ($action == 'Add Event') {                            //
     $eventName = filter_input(INPUT_POST, 'EventName');
