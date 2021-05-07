@@ -201,5 +201,14 @@
         if (!$statement1) { //
             // Maybe make while loop that takes from a csv and populates the classInfo table?
 
+            //  For now and for testing purposes, I'm populating the database with the test entries
+            $query4 = "INSERT INTO `ClassInfo` (`CRN`, `CourseID`, `Professor`, `CMON`, `CTUE`, `CWED`, `CTHU`, `CFRI`, `CSAT`, `CSUN`) VALUES
+                  (0, 'CIS230.120', 'Tim Moriarty', '1:30.pm-3.pm', 'None', '1:30.pm-3.pm', 'None', 'None', 'None', 'None'),
+                  (1, 'CIS115.110', 'Tim Moriarty', 'None', '1:30.pm-3.pm', 'None', '1:30.pm-3.pm', 'None', 'None', 'None'),
+                  (2, 'CIS261.980', 'Garry Daly', 'None', '6.pm-9:30.pm', 'None', 'None', 'None', 'None', 'None'),
+                  (3, 'WEB1115.220', 'Garry Daly', '9.am-12.pm', 'None', '9.am-12.pm', 'None', 'None', 'None', 'None'),
+                  (4, 'CIS130.420', 'Maya Tolappa', 'None', '8:30.am-11.am', 'None', '8:30.am-11.am', 'None', 'None', 'None');";
+            $statement4 = $db->query($query4);
+
         }
 ?>
