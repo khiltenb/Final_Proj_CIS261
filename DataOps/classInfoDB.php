@@ -164,4 +164,8 @@ function add_class($crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu, $cfr
     $statement->execute();
 
 }
+
+function dropTables() {
+    //  Here is where I'll drop the tables so that data is cleared.
+}
 ?>

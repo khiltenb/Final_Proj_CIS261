@@ -23,8 +23,8 @@
         This tool was developed to help students effectively manage their time throughout the semester.
     </p>
     <p>
-        If you're new, please select the "tutorial" link, and you'll be given a guided experience, otherwise select the
-        "I know what I'm doing link."
+        If you're new, please select the "Beginner Mode" link, and you'll be given a guided experience, otherwise select the
+        "Advanced Mode" link.
     </p>
     <p>
         Please don't hesitate to give feedback at the end. It is greatly appreciated.
