@@ -81,9 +81,44 @@ br {
 }
 
 table {
-    border: 1px solid black;
+    border: thin solid black;
     border-collapse: collapse;
     margin-bottom: 1em;
+}
+
+th {
+    border: solid thin black;
+    background-color: lightgray;
+}
+tr {
+    height: 20px;
+}
+td {
+    border: solid thin black;
+    width: 100px;
+}
+.unique {
+    width:auto;
+}
+.whole_hour {
+    border: solid thin black;
+    font-weight: bold;
+    width: min-content;
+    background-color: lightgray;
+}
+.major_hour {
+    border: solid thin black;
+    font-size:small;
+    text-align: center;
+    width: min-content;
+    background-color: lightgray;
+}
+.minor_hour {
+    border: solid thin black;
+    font-size:x-small;
+    text-align: right;
+    width: min-content;
+    background-color: lightgray;
 }
 
 ul {

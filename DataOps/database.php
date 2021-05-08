@@ -139,7 +139,7 @@
         exit();                                         
     }
 
-    $query1 = 'CREATE TABLE IF NOT EXISTS ClassInfo
+    $query1 = 'CREATE TABLE ClassInfo
               (
                   CRN         INT         NOT NULL,
                   CourseID    VARCHAR(60) NOT NULL,
@@ -198,9 +198,34 @@
             $statement3 = false;
         }
 
-        if (!$statement1) { //
+        if ($statement1) { //
             // Maybe make while loop that takes from a csv and populates the classInfo table?
-
+            // Need to test pulling data from .csv file. Will research this and test it.
+            if (($handle = fopen("../DataOps/Data.csv", "r")) !== FALSE) {
+                //echo "Past the if statement";
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if (is_numeric($data[1])) {     //  Checks for a numeric value (CRN), then proceeds with the following
+                        //  function here to add for making the insert statements. Won't be a function, but could be.
+                        
+                        //  Plan: searching the days of the week section of the csv file, and then constructing the data 
+                        //      to feed to the function. Starting with thursday, then moving along the week as normal.
+                        $dataDays = $data[15];                                                                                              //  placeHolder
+                        $days = array('Th', 'M', 'T', 'W', 'F', 'Sa', 'Su');                                                                //  Order of how I'm going through the days
+                        $classDays = array('M'=>'None', 'T'=>'None', 'W'=>'None', "Th"=>'None', 'F'=>'None', 'Sa'=>'None', 'Su'=>'None');   //  Setting up for entering data in the database
+                        for ($i = 0; $i < 6; $i++) {                                                                                        //  looping through all the days
+                            $pos = strpos($dataDays, $days[$i]);                                                                            //  proof of (non)existence within the string $dataDays
+                            if ($pos != false) {                                                                                            //  if its there, do the following
+                                $classDays[$days[$i]] = $data[13] . '-' .$data[14];                                                         //  put the times in the placeholder spot for the data entry
+                                $dataDays = str_replace($days[$i], '', $dataDays);                                                          //  remove the day from the string, allowing for Th not to interfere with T
+                            }
+                        }
+                        // function call to enter data into database
+                    }
+                }
+            }
+        fclose($handle);
+        
+/*
             //  For now and for testing purposes, I'm populating the database with the test entries
             $query4 = "INSERT INTO `ClassInfo` (`CRN`, `CourseID`, `Professor`, `CMON`, `CTUE`, `CWED`, `CTHU`, `CFRI`, `CSAT`, `CSUN`) VALUES
                   (0, 'CIS230.120', 'Tim Moriarty', '1:30.pm-3.pm', 'None', '1:30.pm-3.pm', 'None', 'None', 'None', 'None'),
@@ -209,6 +234,6 @@
                   (3, 'WEB1115.220', 'Garry Daly', '9.am-12.pm', 'None', '9.am-12.pm', 'None', 'None', 'None', 'None'),
                   (4, 'CIS130.420', 'Maya Tolappa', 'None', '8:30.am-11.am', 'None', '8:30.am-11.am', 'None', 'None', 'None');";
             $statement4 = $db->query($query4);
-
+*/
         }
 ?>

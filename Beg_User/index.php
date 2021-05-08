@@ -1,12 +1,14 @@
+<!--
+Ken Hiltenbrand
+CIS261.980 - PHP Webserver Programming - Garry Daly
+Final Project Beg_User/index.php
+-->
 <?php
-/*
-Ken Hiltenbrandj
-CIS261.980 - Professor Garry Daly
-Final Project index.php for the novice user path
-*/
-
 require('../DataOps/database.php');     //  Makes it so we can acces the database that we want
 require('../DataOps/classInfoDB.php');  //
+//if (!isset($_SESSION['count'])) {
+//    $_SESSION['count'] = 0;
+//}
 
 /*
 Here's where things get a little messy. I had idead about how to organize the data and how I'd
@@ -25,14 +27,14 @@ if ($action == NULL){
     $action = filter_input(INPUT_GET, 'action');
     if ($action == NULL)
     {
-        $action = 'Beginner Mode';
+        $action = 'Advanced Mode';
     }
 }
 
 //  This is where things get messy real quick. I'm planning to use this
-if ($action == 'Beginner Mode')                                 //
+if ($action == 'Advanced Mode')                                 //
 {                                                               //
-    include('EnterCRNBeg.php');                                 //
+    include('EnterCRNAdv.php');                                 //
 } else if ($action == 'Continue to Info Verification') {        //
     $crn = array();
     $crn[0] = filter_input(INPUT_POST, 'crn1');
@@ -41,46 +43,41 @@ if ($action == 'Beginner Mode')                                 //
     $crn[3] = filter_input(INPUT_POST, 'crn4');
     $crn[4] = filter_input(INPUT_POST, 'crn5');
     $crn[5] = filter_input(INPUT_POST, 'crn6');
-    $count = 0;
     $classinformation = array();
-    $profCount = 0;
-    $professors = array();
     for ($i = 0; $i < 5; $i++)
     {
-        if (!empty($crn[$i]))
+        if (!empty($crn[$i])) // Need something to validate integer value here.
         {
             $crn[$i] = intval($crn[$i]);
-            //echo "looking up crn for crn[".$i."]=".$crn[$i]."<br>\n";
-            $oneClassInfo = get_ClassInfo($crn[$i]);
-            //echo "oneClassInfo[Professor]=".$oneClassInfo["Professor"]."<br>\n";
-            $classinformation[$i] = $oneClassInfo;
-            //echo "classinformation[".$i."][Professor]=".$classinformation[$i]["Professor"]."<br>\n";
-            $count++;
-            $classProf = $oneClassInfo['Professor'];
-
-            if (count($professors) == 0 || $classProf != $professors[$profCount]) {
-                $professors[$profCount] = get_OH($classProf);
-                $profCount++;
-                //echo $classinformation[$i]['Professor'] . 'should be returning "Tim Moriarty"';
+            $oneCI = get_ClassInfo($crn[$i]);
+            $recCheck = tempRecordsCheck($crn[$i]);
+            if ($recCheck == '' || $recCheck == NULL) {
+                setTemp($oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], 
+                $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
+                //$_SESSION['count'] += 1;
             }
         }
     }
+    //$oneCI = array();
+    $classinformation = getTemp();
     
-    include('InfoVerificationBeg.php');                         //
+    include('InfoVerificationAdv.php');                         //
 } else if ($action == 'Continue to the Prototype Schedule') {   //
     // stuff?
-    include('ProtoSchedBeg.php');                               //
+    include('ProtoSchedAdv.php');                               //
 } else if ($action == 'Continue to Modified Schedule') {        //
     // stuff?
-    include('AddSchedBeg.php');                                 //
+    include('AddSchedAdv.php');                                 //
 } else if ($action == 'Enter Other CRNs') {                     //
     // stuff
-    include('EnterCRNBef.php');                                 //
+    include('EnterCRNAdv.php');                                 //
 } else if ($action == 'Download') {                             //
     // stuff
     include('../Download.php');                                 //
 } else if ($action == 'Exit') {                                 //
     // stuff
+    $path2 = "../";
+    $user = "Adv";
     include('../ExitScreen.php');                               //
 } else if ($action == 'Add Event') {                            //
     $eventName = filter_input(INPUT_POST, 'EventName');
@@ -131,7 +128,7 @@ if ($action == 'Beginner Mode')                                 //
         $events = array();
         $events = getEvents();
         
-    include('AddSchedBeg.php');                                 //
+    include('AddSchedAdv.php');                                 //
 } else if ($action == 'Remove Event') {                         //
     $delID = filter_input(INPUT_POST, 'EvID');
     
@@ -140,13 +137,15 @@ if ($action == 'Beginner Mode')                                 //
         delete_Event($delID);
         $events = array();
         $events = getEvents();
-        include('AddSchedBeg.php');
+        include('AddSchedAdv.php');
     } else {
         $errmessage = 'The entry failed to terminate. Please try again or (for the developer) fix the code.';//  Trigger to display error message and return to the page
-        include('AddSchedBeg.php');
+        include('AddSchedAdv.php');
     }
-} else if ($action == 'Remove Class') {                         //
-    //This is an array thing, but there's a scope issue, which I'm actively looking to solve.
-} else if ($action == 'Remove OH') {
-    //Similar issue to the preceding section.
+} else if ($action == 'Remove Class') {    
+    $tDelID = filter_input(INPUT_POST, 'recordNum');                     //
+    remove_Temp($tDelID);
+    $classinformation = array();
+    $classinformation = getTemp();
+    include('InfoVerificationAdv.php');
 }
