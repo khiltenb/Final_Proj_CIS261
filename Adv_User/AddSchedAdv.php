@@ -141,18 +141,22 @@ for ($c = 0;$c < count($classData); $c++) {                             //  for 
     }
 }
 
+$events = array();
+echo '<br><br><br>' . count($events) . '<br><br><br>';
 $events = getEvents();
-$eDays = array('EMON', 'ETUE', 'EWED', 'ETHU', 'EFRI', 'ESAT', 'ESUN');  //  Associative array to help with parsing through the data
-for ($c = 0;$c < count($events); $c++) {                             //  for each entry that was retrieved from the classInfoTemp Table, iterate the following
-    for ($d = 0; $d < count($eDays); $d++) {                             //   for each day of the week, do the following
-        if ($events[$c][$eDays[$d]] != 'None') {                      //  if there is no class meeting time on this day, do the following
-            $eventTimeTemp = explode('-', $events[$c][$eDays[$d]]);   //  separate the start and end time, and set the classTimeTemp variable to the given array
-            // $data[$d][0][] = array((int)$classTimeTemp[0], (int)$classTimeTemp[1], $classData[$c]['CourseID']); //  set data[$d][0][] equal to a new array comprised of the start time, end time and the course ID
+$eDays = array('EMON', 'ETUE', 'EWED', 'ETHU', 'EFRI', 'ESAT', 'ESUN');     //  Associative array to help with parsing through the data
+for ($c = 0;$c < count($events); $c++) {                                    //  for each entry that was retrieved from the classInfoTemp Table, iterate the following
+    for ($d = 0; $d < count($eDays); $d++) {                                //   for each day of the week, do the following
+        if ($events[$c][$eDays[$d]] != 'None') {                            //  if there is no class meeting time on this day, do the following
+            $eventTimeTemp = explode('-', $events[$c][$eDays[$d]]);         //  separate the start and end time, and set the classTimeTemp variable to the given array
             $thisEvent = array('sTime'=>(int)$eventTimeTemp[0], 'eTime'=>(int)$eventTimeTemp[1], 'desc'=>$eventData[$c]['EventName']);
             insertClassIntoDay($thisEvent, $data[$d]);
+            echo '<br><br>';
+            print_r($events);
         }
     }
 }
+echo $events['EventName'];
 
 echo '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
 echo 'Classes on Monday<br>';
