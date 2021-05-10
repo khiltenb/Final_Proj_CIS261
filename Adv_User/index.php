@@ -93,26 +93,13 @@ if ($action == 'Advanced Mode')                                 //
 
     $timeH1 = filter_input(INPUT_POST, 'hour1');
     $timeM1 = filter_input(INPUT_POST, 'min1');
-    $timeMer1 = filter_input(INPUT_POST, 'meridian1');
     $timeH2 = filter_input(INPUT_POST, 'hour2');
     $timeM2 = filter_input(INPUT_POST, 'min2');
-    $timeMer2 = filter_input(INPUT_POST, 'meridian2');
     
     //  Converts 0 or 1 to A.M. or P.M.
-    if ($timeMer1 == 0) {
-        $timeMer1 = 'A.M.';
-    } else {
-        $timeMer1 = 'P.M.';
-    }
-
-    if ($timeMer2 == 0) {
-        $timeMer2 = 'A.M.';
-    } else {
-        $timeMer2 = 'P.M.';
-    }
 
 
-    $time_formatted = $timeH1 . ":" . $timeM1 . " " . $timeMer1 . ";" . $timeH2 . ":" . $timeM2 . " " . $timeMer2;
+    $time_formatted = $timeH1 . $timeM1 . "-" . $timeH2 . $timeM2 . "-" . $timeMer2;
     //  date/time object? (chatper 10 pg 294)
 
     for ($i = 0; $i < 7; $i++) {
