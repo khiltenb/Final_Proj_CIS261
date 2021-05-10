@@ -4,14 +4,15 @@
     Final Project - InfoVerificationBeg.php
 -->
 <?php $path ='../'?>
-<?php include '../view/header.php';?>
+<?php include '../view/header.php'; ?>
 
 <body>
     <h1>Please Verify the Information Presented</h1>
-    <p>This page is meant to let you verify the information gathered based on the Course Registration Numbers (CRNs) 
-        that you entered on the previous page. If you see an entry in the table has been entered in error, please 
-        select the "Delete" button on the screen and it will be omitted. When you have verified that all of the courses
-        present are correct, please select "Continue to Prototype Schedule" and a prototype schedule will be presented to you.
+    <p>The SQL should run here showing the added details about the class to let the
+        student confirm the data shown. I've added a "delete" button, but it doesn't
+        work as intended just yet (issues with scope). This is just proof that the SQL for the class time and
+        office hours works, and the proof for the schedule personalization will work
+        much the same as this.
      </p>
     <table>
         <tr>
@@ -27,7 +28,10 @@
             <th>Sun</th>
         </tr>
 
-        <?php foreach($classInformation as $class): ?>
+        <?php $class = array(); ?>
+        <?php //for($i = 0; $i <= $_SESSION['count']; $i++): ?>
+        <?php //$class = $classinformation[$i] ?>
+        <?php foreach($classinformation as $class):?>
         <tr>
             <td><?php echo $class['CRN']; ?></td>
             <td><?php echo $class['CourseID']; ?></td>
@@ -41,11 +45,12 @@
             <td><?php echo $class['CSUN']; ?></td>
             <td><form action='.' method='POST'>
                 <input type='hidden' name='action' value='Remove Class'>
-                <input type='hidden' name='recordNum' value='<?php echo $i ?>'>
+                <input type='hidden' name='recordNum' value='<?php echo $class['CRN'] ?>'>
                 <input type='submit' value='Delete'>
-            </form></tr>
+            </form></td>
         </tr>
         <?php endforeach;?>
+    </table>
 
     <form action="." method="POST" style="display:inline">
         <input type="submit" name='action' value="Enter Other CRNs">
