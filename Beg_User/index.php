@@ -27,14 +27,14 @@ if ($action == NULL){
     $action = filter_input(INPUT_GET, 'action');
     if ($action == NULL)
     {
-        $action = 'Advanced Mode';
+        $action = 'Beginner Mode';
     }
 }
 
 //  This is where things get messy real quick. I'm planning to use this
-if ($action == 'Advanced Mode')                                 //
+if ($action == 'Beginner Mode')                                 //
 {                                                               //
-    include('EnterCRNAdv.php');                                 //
+    include('EnterCRNBeg.php');                                 //
 } else if ($action == 'Continue to Info Verification') {        //
     $crn = array();
     $crn[0] = filter_input(INPUT_POST, 'crn1');
@@ -48,36 +48,52 @@ if ($action == 'Advanced Mode')                                 //
     {
         if (!empty($crn[$i])) // Need something to validate integer value here.
         {
+            $validCRNs = true;
             $crn[$i] = intval($crn[$i]);
             $oneCI = get_ClassInfo($crn[$i]);
             $recCheck = tempRecordsCheck($crn[$i]);
             if ($recCheck == '' || $recCheck == NULL) {
-                setTemp($oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], 
-                $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
-                //$_SESSION['count'] += 1;
+                try {
+                    setTemp(
+                        $oneCI['CRN'],
+                        $oneCI['CourseID'],
+                        $oneCI['Professor'],
+                        $oneCI['CMON'],
+                        $oneCI['CTUE'],
+                        $oneCI['CWED'],
+                        $oneCI['CTHU'],
+                        $oneCI['CFRI'],
+                        $oneCI['CSAT'],
+                        $oneCI['CSUN'],
+                        'Beg'
+                    );
+                    //$_SESSION['count'] += 1;
+                } catch (PDOException $e) {
+                    $validCRNs = false;
+                }
             }
         }
     }
     //$oneCI = array();
     $classinformation = getTemp();
     
-    include('InfoVerificationAdv.php');                         //
+    include('InfoVerificationBeg.php');                         //
 } else if ($action == 'Continue to the Prototype Schedule') {   //
     // stuff?
-    include('ProtoSchedAdv.php');                               //
+    include('ProtoSchedBeg.php');                               //
 } else if ($action == 'Continue to Modified Schedule') {        //
     // stuff?
-    include('AddSchedAdv.php');                                 //
+    include('AddSchedBeg.php');                                 //
 } else if ($action == 'Enter Other CRNs') {                     //
     // stuff
-    include('EnterCRNAdv.php');                                 //
+    include('EnterCRNBeg.php');                                 //
 } else if ($action == 'Download') {                             //
     // stuff
     include('../Download.php');                                 //
 } else if ($action == 'Exit') {                                 //
     // stuff
     $path2 = "../";
-    $user = "Adv";
+    $user = "Beg";
     include('../ExitScreen.php');                               //
 } else if ($action == 'Add Event') {                            //
     $eventName = filter_input(INPUT_POST, 'EventName');
@@ -92,26 +108,13 @@ if ($action == 'Advanced Mode')                                 //
 
     $timeH1 = filter_input(INPUT_POST, 'hour1');
     $timeM1 = filter_input(INPUT_POST, 'min1');
-    $timeMer1 = filter_input(INPUT_POST, 'meridian1');
     $timeH2 = filter_input(INPUT_POST, 'hour2');
     $timeM2 = filter_input(INPUT_POST, 'min2');
-    $timeMer2 = filter_input(INPUT_POST, 'meridian2');
     
     //  Converts 0 or 1 to A.M. or P.M.
-    if ($timeMer1 == 0) {
-        $timeMer1 = 'A.M.';
-    } else {
-        $timeMer1 = 'P.M.';
-    }
-
-    if ($timeMer2 == 0) {
-        $timeMer2 = 'A.M.';
-    } else {
-        $timeMer2 = 'P.M.';
-    }
 
 
-    $time_formatted = $timeH1 . ":" . $timeM1 . " " . $timeMer1 . ";" . $timeH2 . ":" . $timeM2 . " " . $timeMer2;
+    $time_formatted = $timeH1 . $timeM1 . "-" . $timeH2 . $timeM2;
     //  date/time object? (chatper 10 pg 294)
 
     for ($i = 0; $i < 7; $i++) {
@@ -128,7 +131,7 @@ if ($action == 'Advanced Mode')                                 //
         $events = array();
         $events = getEvents();
         
-    include('AddSchedAdv.php');                                 //
+    include('AddSchedBeg.php');                                 //
 } else if ($action == 'Remove Event') {                         //
     $delID = filter_input(INPUT_POST, 'EvID');
     
@@ -137,15 +140,15 @@ if ($action == 'Advanced Mode')                                 //
         delete_Event($delID);
         $events = array();
         $events = getEvents();
-        include('AddSchedAdv.php');
+        include('AddSchedBeg.php');
     } else {
         $errmessage = 'The entry failed to terminate. Please try again or (for the developer) fix the code.';//  Trigger to display error message and return to the page
-        include('AddSchedAdv.php');
+        include('AddSchedBeg.php');
     }
 } else if ($action == 'Remove Class') {    
     $tDelID = filter_input(INPUT_POST, 'recordNum');                     //
     remove_Temp($tDelID);
     $classinformation = array();
     $classinformation = getTemp();
-    include('InfoVerificationAdv.php');
+    include('InfoVerificationBeg.php');
 }
