@@ -49,13 +49,29 @@ if ($action == 'Advanced Mode')                                 //
     {
         if (!empty($crn[$i])) // Need something to validate integer value here.
         {
+            $validCRNs = true;
             $crn[$i] = intval($crn[$i]);
             $oneCI = get_ClassInfo($crn[$i]);
             $recCheck = tempRecordsCheck($crn[$i]);
             if ($recCheck == '' || $recCheck == NULL) {
-                setTemp($oneCI['CRN'], $oneCI['CourseID'], $oneCI['Professor'], $oneCI['CMON'], $oneCI['CTUE'], $oneCI['CWED'], 
-                $oneCI['CTHU'], $oneCI['CFRI'], $oneCI['CSAT'], $oneCI['CSUN'], 'Adv');
-                //$_SESSION['count'] += 1;
+                try {
+                    setTemp(
+                        $oneCI['CRN'],
+                        $oneCI['CourseID'],
+                        $oneCI['Professor'],
+                        $oneCI['CMON'],
+                        $oneCI['CTUE'],
+                        $oneCI['CWED'],
+                        $oneCI['CTHU'],
+                        $oneCI['CFRI'],
+                        $oneCI['CSAT'],
+                        $oneCI['CSUN'],
+                        'Adv'
+                    );
+                    //$_SESSION['count'] += 1;
+                } catch (PDOException $e) {
+                    $validCRNs = false;
+                }
             }
         }
     }
@@ -99,7 +115,7 @@ if ($action == 'Advanced Mode')                                 //
     //  Converts 0 or 1 to A.M. or P.M.
 
 
-    $time_formatted = $timeH1 . $timeM1 . "-" . $timeH2 . $timeM2 . "-" . $timeMer2;
+    $time_formatted = $timeH1 . $timeM1 . "-" . $timeH2 . $timeM2;
     //  date/time object? (chatper 10 pg 294)
 
     for ($i = 0; $i < 7; $i++) {

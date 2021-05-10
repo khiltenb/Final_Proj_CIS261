@@ -205,39 +205,40 @@
                 //echo "Past the if statement";
                 $crnCheck = array();
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                    if (is_numeric($data[1]) && $data) {     //  Checks for a numeric value (CRN), then proceeds with the following
+                    if (is_numeric($data[1])) {     //  Checks for a numeric value (CRN), then proceeds with the following
                         //  function here to add for making the insert statements. Won't be a function, but could be.
                         
                         //  Plan: searching the days of the week section of the csv file, and then constructing the data 
                         //      to feed to the function. Starting with thursday, then moving along the week as normal.
                         if ($data[13] == '') {  // Doesn't accept events that don't have a start time
-                            echo 'statement ignored: No start time for ' . $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br>';
+                            echo 'statement ignored: No start time for ' . $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br><br>';
                             continue;
                         }
                         $dataDays = $data[15];                                                                                              //  placeHolder
                         $days = array('Th', 'M', 'T', 'W', 'F', 'Sa', 'Su');                                                                //  Order of how I'm going through the days
                         $classDays = array('M'=>'None', 'T'=>'None', 'W'=>'None', "Th"=>'None', 'F'=>'None', 'Sa'=>'None', 'Su'=>'None');   //  Setting up for entering data in the database
                         for ($i = 0; $i < count($days); $i++) {                                                                                        //  looping through all the days
-                            //echo 'looking for day '. $days[$i] . ' in string \''. $dataDays . '\'<br>';
                             $pos = strpos($dataDays, $days[$i]);                                                                            //  proof of (non)existence within the string $dataDays
                             if (is_numeric($pos)) {                                                                                            //  if its there, do the following
                                 $classDays[$days[$i]] = $data[13] . '-' .$data[14];                                                         //  put the times in the placeholder spot for the data entry
-                                //echo 'Found!<br>for CRN '. $data[1] . ' Adding the class time ' .$classDays[$days[$i]] . ' for day ' . $days[$i] . ' from string '. $dataDays . '<br>';
                                 $dataDays = str_replace($days[$i], '', $dataDays);                                                          //  remove the day from the string, allowing for Th not to interfere with T
-                                //echo 'Just changed datadays to ' . $dataDays . '<br>';
                             } else {
                                 //echo "Not found.<br>";
                             }
                         }
+                        // echo $data[1] . ' ' . $data[2] . ' ' . $data[13] . '-' . $data[14] . $data[15] . '<br>';
+                        echo "<br>Original line has (" . count($data) . ") : ";
+                        print_r($data);
+
                         // function call to enter data into database
-                        /*test echo statement*/ echo $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br>';
+                        /*test echo statement*/ //echo $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br>';
                         global $db;
                         $query = "INSERT INTO ClassInfo
                                         (CRN, CourseID, Professor, CMON, CTUE, CWED, CTHU, CFRI, CSAT, CSUN)
                                     Values
                                         (:crn, :course, :prof, :mon, :tue, :wed, :thu, :fri, :sat, :sun)";
                         $statement = $db->prepare($query);
-                        $statement->bindValue(':crn', $data[1] . '0'. $data[3]);
+                        $statement->bindValue(':crn', $data[1]);
                         $statement->bindValue(':course', $data[2]);
                         $statement->bindValue(':prof', $data[8]);
                         $statement->bindValue(':mon', $classDays['M']);
@@ -247,12 +248,14 @@
                         $statement->bindValue(':fri', $classDays['F']);
                         $statement->bindValue(':sat', $classDays['Sa']);
                         $statement->bindValue(':sun', $classDays['Su']);
+                        //print_r($statment);
                         try {
                             $statement->execute();
                         } catch (PDOException $e) {
                             $statement3 = false;
-                            echo 'statement ignored: CRN repeated' . $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br>';
+                            //echo 'statement ignored: CRN repeated' . $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br>';
                         }
+                        $classDays = array();
                     }
                 }
             }
@@ -260,14 +263,14 @@
         
 
             //  For now and for testing purposes, I'm populating the database with the test entries
-            $query4 = "INSERT INTO `ClassInfo` (`CRN`, `CourseID`, `Professor`, `CMON`, `CTUE`, `CWED`, `CTHU`, `CFRI`, `CSAT`, `CSUN`) VALUES
+            /*$query4 = "INSERT INTO `ClassInfo` (`CRN`, `CourseID`, `Professor`, `CMON`, `CTUE`, `CWED`, `CTHU`, `CFRI`, `CSAT`, `CSUN`) VALUES
                   (0, 'CIS230.120', 'Tim Moriarty', '1330-1500', 'None', '1330-1500', 'None', 'None', 'None', 'None'),
                   (1, 'CIS115.110', 'Tim Moriarty', 'None', '1330-1500', 'None', '11330-1500', 'None', 'None', 'None'),
                   (2, 'CIS261.980', 'Garry Daly', 'None', '1800-2130', 'None', 'None', 'None', 'None', 'None'),
                   (3, 'WEB1115.220', 'Garry Daly', '0900-1200', 'None', '0900-1200', 'None', 'None', 'None', 'None'),
                   (4, 'CIS130.420', 'Maya Tolappa', 'None', '0830-1100', 'None', '0830-1100', 'None', 'None', 'None'),
                   (5, 'ECN202.111', 'Sowjana Dharmasankar', '1400-1600', 'None', '1400-1600', 'None', 'None', 'None', 'None');";
-            $statement4 = $db->query($query4);
+            $statement4 = $db->query($query4);*/
 
         }
 ?>

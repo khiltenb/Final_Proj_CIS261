@@ -23,11 +23,11 @@ for each (for loop maybe) day
 */
 
 function isOverlap($class1, &$class2) {
-    echo 'isOverlap class1 is ';
-    print_r($class1);
-    echo ' class2 is ';
-    print_r($class2);
-    echo '<br>';
+    //echo 'isOverlap class1 is ';
+    //print_r($class1);
+    //echo ' class2 is ';
+    //print_r($class2);
+    //echo '<br>';
     if ($class1['sTime'] < $class2['sTime']) {      //
         if ($class2['sTime'] < $class1['eTime']) {
             return true;
@@ -44,45 +44,45 @@ function isOverlap($class1, &$class2) {
 }
 
 function insertClassIntoDay($class, &$day) {
-    echo 'Inserting class ' ;
-    print_r($class);
-    echo ' into day ';
-    print_r($day);
-    echo '<br><br>';
+    //echo 'Inserting class ' ;
+    //print_r($class);
+    //echo ' into day ';
+    //print_r($day);
+    //echo '<br><br>';
     for ($col = 0; $col < count($day); $col++){// for each column of the day
         $overlap = false;
         for ($eventIndex = 0; $eventIndex < count($day[$col]); $eventIndex++){// scan the list of events for the column for an overlapping class time
             $colEvent = $day[$col][$eventIndex];
-            echo 'Comparing class ';
-            print_r($class);
-            echo ' to colEvent ';
-            print_r($colEvent);
-            echo '<br><br>';
+            //echo 'Comparing class ';
+            //print_r($class);
+            //echo ' to colEvent ';
+            //print_r($colEvent);
+            //echo '<br><br>';
             if (isOverlap($class, $colEvent)) {
                 $overlap = true;
                 break; // This column won't do, go to the next one.
             } else if ($colEvent['sTime'] > $class['sTime']) {// if there is no overlap, and this event goes before index, insert.
                 $day[$col] = array_splice($day[$col], $eventIndex, 0, $class);
-                echo ' day (col insert) is now ';
-                print_r($day);
-                echo '<br><br>';
+                //echo ' day (col insert) is now ';
+                //print_r($day);
+                //echo '<br><br>';
                 return;
             }
         }
         if (!$overlap) {
             // There was no overlap in this column.  We just hit the end, so insert at the end.
             $day[$col][] = $class;
-            echo ' Day (col end insert) is now ';
-            print_r($day);
-            echo '<br>';
+            //echo ' Day (col end insert) is now ';
+            //print_r($day);
+            //echo '<br>';
                     return;
         }
     }
     //if there were overlaps in all of the columns, insert a new column
     $day[] = array($class);
-    echo ' Day (new column) is now ';
-    print_r($day);
-    echo '<br>';
+    //echo ' Day (new column) is now ';
+    //print_r($day);
+    //echo '<br>';
 }
 
 
@@ -114,12 +114,12 @@ for ($c = 0;$c < count($classData); $c++) {                             //  for 
         }
     }
 }
-echo '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
-echo 'Classes on Monday<br>';
-for ($cow = 0; $cow < count($data[0]); $cow++) {
-    print_r($data[0][$cow]);
-    echo "<br>";
-}
+//echo '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
+//echo 'Classes on Monday<br>';
+// for ($cow = 0; $cow < count($data[0]); $cow++) {
+//     print_r($data[0][$cow]);
+//     echo "<br>";
+// }
 //print_r($data[0]);
 
 
