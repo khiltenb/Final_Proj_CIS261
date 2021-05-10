@@ -5,7 +5,7 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    width: 750px;
+    width: 70%;
     margin: 0 auto;
     padding: 0 1em;
     background-color: white;
@@ -13,9 +13,9 @@ body {
 }
 
 .addsched {
-    height: 70%; 
+    height: 50%; 
     width: 250px; 
-    position: fixed; 
+    /*position: fixed; */
     /*z-index: 1;*/ 
     top: 0; 
     right: 0;
