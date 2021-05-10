@@ -49,11 +49,11 @@
     </table>
 <?php
     function isOverlap($class1, &$class2) {
-    echo 'isOverlap class1 is ';
-    print_r($class1);
-    echo ' class2 is ';
-    print_r($class2);
-    echo '<br>';
+    // echo 'isOverlap class1 is ';
+    // print_r($class1);
+    // echo ' class2 is ';
+    // print_r($class2);
+    // echo '<br>';
     if ($class1['sTime'] < $class2['sTime']) {      //
         if ($class2['sTime'] < $class1['eTime']) {
             return true;
@@ -70,45 +70,45 @@
 }
 
 function insertClassIntoDay($class, &$day) {
-    echo 'Inserting class ' ;
-    print_r($class);
-    echo ' into day ';
-    print_r($day);
-    echo '<br><br>';
+    // echo 'Inserting class ' ;
+    // print_r($class);
+    // echo ' into day ';
+    // print_r($day);
+    // echo '<br><br>';
     for ($col = 0; $col < count($day); $col++){// for each column of the day
         $overlap = false;
         for ($eventIndex = 0; $eventIndex < count($day[$col]); $eventIndex++){// scan the list of events for the column for an overlapping class time
             $colEvent = $day[$col][$eventIndex];
-            echo 'Comparing class ';
-            print_r($class);
-            echo ' to colEvent ';
-            print_r($colEvent);
-            echo '<br><br>';
+            // echo 'Comparing class ';
+            // print_r($class);
+            // echo ' to colEvent ';
+            // print_r($colEvent);
+            // echo '<br><br>';
             if (isOverlap($class, $colEvent)) {
                 $overlap = true;
                 break; // This column won't do, go to the next one.
             } else if ($colEvent['sTime'] > $class['sTime']) {// if there is no overlap, and this event goes before index, insert.
                 $day[$col] = array_splice($day[$col], $eventIndex, 0, $class);
-                echo ' day (col insert) is now ';
-                print_r($day);
-                echo '<br><br>';
+                // echo ' day (col insert) is now ';
+                // print_r($day);
+                // echo '<br><br>';
                 return;
             }
         }
         if (!$overlap) {
             // There was no overlap in this column.  We just hit the end, so insert at the end.
             $day[$col][] = $class;
-            echo ' Day (col end insert) is now ';
-            print_r($day);
-            echo '<br>';
+            // echo ' Day (col end insert) is now ';
+            // print_r($day);
+            // echo '<br>';
                     return;
         }
     }
     //if there were overlaps in all of the columns, insert a new column
     $day[] = array($class);
-    echo ' Day (new column) is now ';
-    print_r($day);
-    echo '<br>';
+    // echo ' Day (new column) is now ';
+    // print_r($day);
+    // echo '<br>';
 }
 
 
@@ -142,28 +142,29 @@ for ($c = 0;$c < count($classData); $c++) {                             //  for 
 }
 
 $events = array();
-echo '<br><br><br>' . count($events) . '<br><br><br>';
+//echo '<br><br><br>' . count($events) . '<br><br><br>';
 $events = getEvents();
 $eDays = array('EMON', 'ETUE', 'EWED', 'ETHU', 'EFRI', 'ESAT', 'ESUN');     //  Associative array to help with parsing through the data
 for ($c = 0;$c < count($events); $c++) {                                    //  for each entry that was retrieved from the classInfoTemp Table, iterate the following
     for ($d = 0; $d < count($eDays); $d++) {                                //   for each day of the week, do the following
         if ($events[$c][$eDays[$d]] != 'None') {                            //  if there is no class meeting time on this day, do the following
             $eventTimeTemp = explode('-', $events[$c][$eDays[$d]]);         //  separate the start and end time, and set the classTimeTemp variable to the given array
-            $thisEvent = array('sTime'=>(int)$eventTimeTemp[0], 'eTime'=>(int)$eventTimeTemp[1], 'desc'=>$eventData[$c]['EventName']);
+            $thisEvent = array('sTime'=>(int)$eventTimeTemp[0], 'eTime'=>(int)$eventTimeTemp[1], 'desc'=>$events[$c]['EventName']);
+            //echo 'EventName' . $events[$c]['EventName'] . '<br>';
             insertClassIntoDay($thisEvent, $data[$d]);
-            echo '<br><br>';
-            print_r($events);
+            //echo '<br><br>';
+            //print_r($events);
         }
     }
 }
-echo $events['EventName'];
+//echo $events['EventName'];
 
-echo '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
-echo 'Classes on Monday<br>';
-for ($cow = 0; $cow < count($data[0]); $cow++) {
-    print_r($data[0][$cow]);
-    echo "<br>";
-}
+//echo '<br><br><br><br><br><br><br>';
+//echo 'Classes on Monday<br>';
+// for ($cow = 0; $cow < count($data[0]); $cow++) {
+//     //print_r($data[0][$cow]);
+//     //echo "<br>";
+// }
 
 ?>
 

@@ -211,7 +211,7 @@
                         //  Plan: searching the days of the week section of the csv file, and then constructing the data 
                         //      to feed to the function. Starting with thursday, then moving along the week as normal.
                         if ($data[13] == '') {  // Doesn't accept events that don't have a start time
-                            echo 'statement ignored: No start time for ' . $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br><br>';
+                           // echo 'statement ignored: No start time for ' . $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br><br>';
                             continue;
                         }
                         $dataDays = $data[15];                                                                                              //  placeHolder
@@ -227,8 +227,8 @@
                             }
                         }
                         // echo $data[1] . ' ' . $data[2] . ' ' . $data[13] . '-' . $data[14] . $data[15] . '<br>';
-                        echo "<br>Original line has (" . count($data) . ") : ";
-                        print_r($data);
+                        //echo "<br>Original line has (" . count($data) . ") : ";
+                        //print_r($data);
 
                         // function call to enter data into database
                         /*test echo statement*/ //echo $data[1]  . '0' . $data[3]. ' ' . $data[2] . ' ' . $data[8] . ' ' . $classDays['M'] . ' ' . $classDays['T'] . ' ' . $classDays['W'] . ' ' . $classDays['Th'] . ' ' . $classDays['F'] . ' ' . $classDays['Sa'] . ' ' . $classDays['Su'] . '<br>';
