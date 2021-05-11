@@ -169,7 +169,6 @@ for ($c = 0;$c < count($events); $c++) {                                    //  
 ?>
 
 <body>
-    <h1>Proto-Schedule</h1>
     <table cellspacing=0>
       <tbody>
         <tr>
@@ -227,9 +226,7 @@ for ($c = 0;$c < count($events); $c++) {                                    //  
             } ?>
             </tr>
         <?php endfor; ?>
-    <p>I'd meant to get the php and html that lays out the schedule on screen, but the SQL scripts and issues with them 
-    ended up being tougher than anticipated. I am actively looking into how I can do this specific part, as it's one of the few things I have left to figure out. 
-    <div class="addsched">
+        <div class="addsched">
         <form action="." method="POST">
             <label>Add: </label>
             <input type="text" name="EventName" value="" class="textbox"><br>                                        
