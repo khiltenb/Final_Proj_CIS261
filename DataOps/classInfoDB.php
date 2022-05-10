@@ -151,16 +151,16 @@ function add_class($crn, $courseID, $professor, $cmon, $ctue, $cwed, $cthu, $cfr
                 Values
                     (:crn, :course, :prof, :mon, :tue, :wed, :thu, :fri, :sat, :sun)";
     $statement = $db->prepare($query);
-    $statement->bind_Value(':crn', $crn);
-    $statement->bind_Value(':course', $courseID);
-    $statement->bind_Value(':prof', $professor);
-    $statement->bind_Value(':mon', $cmon);
-    $statement->bind_Value(':tue', $ctue);
-    $statement->bind_Value(':wed', $cwed);
-    $statement->bind_Value(':thu', $cthu);
-    $statement->bind_Value(':fri', $cfri);
-    $statement->bind_Value(':sat', $csat);
-    $statement->bind_Value(':sun', $csun);
+    $statement->bindValue(':crn', $crn);
+    $statement->bindValue(':course', $courseID);
+    $statement->bindValue(':prof', $professor);
+    $statement->bindValue(':mon', $cmon);
+    $statement->bindValue(':tue', $ctue);
+    $statement->bindValue(':wed', $cwed);
+    $statement->bindValue(':thu', $cthu);
+    $statement->bindValue(':fri', $cfri);
+    $statement->bindValue(':sat', $csat);
+    $statement->bindValue(':sun', $csun);
     $statement->execute();
 
 }
